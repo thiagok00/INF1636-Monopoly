@@ -1,3 +1,4 @@
+package Artefatos;
 import java.util.Random;
 
 public class Dados {
@@ -23,6 +24,7 @@ public class Dados {
 		return this.dado2;
 	}
 	public int getSoma() {
-		return this.dado1+this.dado2;
+		return 1;
+	//	return this.dado1+this.dado2;
 	}
 }
