@@ -11,6 +11,7 @@ public class Principal extends JFrame  {
 	public Casa[] casas;
 	private int jogadorRodada= 0;
 	private int qtdJogadoresTotal=0;
+	Dados dado = new Dados();
 	Pino[] pinos;
 	
 	private Tabuleiro tabuleiro;
@@ -60,18 +61,21 @@ public class Principal extends JFrame  {
 		tabuleiro.repaint();
 	}
 	
-	public void andarJogadorAtual(int qtdCasas) {
+	public void andarJogadorAtual(Dados dado) {
+		this.dado = dado;
+		if (pinos != null) {
+			int qtdCasas = dado.getSoma();
+			Pino pino = pinos[this.jogadorRodada];
+			int novaCasa = (pino.casaAtual+qtdCasas)%36;
+			pino.casaAtual = novaCasa;
+			Ponto pos = this.casas[novaCasa].getPos(jogadorRodada);
+			pino.setPosition(pos);
+			
 		
-		Pino pino = pinos[this.jogadorRodada];
-		int novaCasa = (pino.casaAtual+qtdCasas)%36;
-		pino.casaAtual = novaCasa;
-		Ponto pos = this.casas[novaCasa].getPos(jogadorRodada);
-		pino.setPosition(pos);
+			jogadorRodada++;
+			jogadorRodada = jogadorRodada%6;
+		}
 		tabuleiro.repaint();
-		
-		//jogadorRodada++;
-		jogadorRodada = jogadorRodada%6;
-		
 	}
 	public void carregaPinos(int qtdJogadores) {
 	

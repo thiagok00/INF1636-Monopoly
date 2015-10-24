@@ -46,7 +46,7 @@ public class MenuJogador extends JPanel implements ActionListener{
 		else if (arg0.getSource() == dado) {
 			Dados nvDado = new Dados();
 			System.out.println("Primeiro dado:" + nvDado.getDado1() + "Segundo dado:" + nvDado.getDado2());
-			frame.andarJogadorAtual(nvDado.getSoma());
+			frame.andarJogadorAtual(nvDado);
 		}
 	}
 	
