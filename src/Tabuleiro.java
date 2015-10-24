@@ -1,11 +1,28 @@
+import javax.swing.*;
 
-public class Tabuleiro {
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import javax.imageio.*;
 
-		System.out.println("Teste First Commit");
-		System.out.println("Testing clone.");
+public class Tabuleiro extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);		
+		BufferedImage i=null;
+
+		try {
+		   i=ImageIO.read(new File("tabuleiroRJ.jpg"));
+		}
+		catch(IOException e) {
+		   System.out.println(e.getMessage());
+		   System.exit(1);
+		}
+		g.drawImage(i, 0, 0, 700, 700, null);	
 	}
-
+	
+	
 }
