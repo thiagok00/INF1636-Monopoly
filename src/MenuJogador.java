@@ -40,7 +40,10 @@ public class MenuJogador extends JPanel implements ActionListener{
 			String[] choices = { "2", "3", "4", "5", "6" };
 		    String input = (String) JOptionPane.showInputDialog(null, "Quantidade de jogadores?",
 		            "Iniciar Jogo", JOptionPane.QUESTION_MESSAGE, null,choices,choices[0]);
-		        frame.iniciaJogo(Integer.parseInt(input));
+		    if (input == null){
+		    	return;
+		    }    
+		    frame.iniciaJogo(Integer.parseInt(input));
 			  
 		}
 		else if (arg0.getSource() == dado) {

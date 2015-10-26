@@ -76,7 +76,6 @@ public class Principal extends JFrame  {
 			pino.casaAtual = novaCasa;
 			Ponto pos = this.casas[novaCasa].getPos(jogadorRodada);
 			pino.setPosition(pos);
-			
 		
 			jogadorRodada++;
 			jogadorRodada = jogadorRodada%qtdJogadoresTotal;
@@ -85,6 +84,8 @@ public class Principal extends JFrame  {
 	}
 	public void carregaPinos(int qtdJogadores) {
 	
+		this.qtdJogadoresTotal = qtdJogadores;
+		this.jogadorRodada = 0;
 		this.pinos = new Pino[qtdJogadores];	
 		for(int i=0; i < qtdJogadores; i++) {
 			Ponto pos = this.casas[0].getPos(i);
