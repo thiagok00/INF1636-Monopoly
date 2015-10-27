@@ -25,15 +25,15 @@ public class MenuPainel extends JPanel implements ActionListener{
 		inicio = new JButton("Iniciar Jogo");
 		inicio.addActionListener(this);
 		
-		compra = new JButton("Comprar");
-		compra.addActionListener(this);
+		/*compra = new JButton("Comprar");
+		compra.addActionListener(this);*/
 		
 		venda = new JButton("Vender");
 		venda.addActionListener(this);
 		
 		add(inicio);
 		add(dado);
-		add(compra);
+		//add(compra);
 		add(venda);
 		
 		
