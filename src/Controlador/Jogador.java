@@ -12,6 +12,26 @@ public class Jogador {
 	private int posX, posY;
 	private static final String[] arrayCores = {"pinos/red_pin.png","pinos/blue_pin.png","pinos/orange_pin.png","pinos/yellow_pin.png","pinos/purple_pin.png","pinos/black_pin.png"};
 	public int casaAtual = 0;
+	private float saldo;
+	
+	public void setSaldo()
+	{
+		this.saldo = 25000;
+	}
+	public float getSaldo()
+	{
+		return this.saldo;
+	}
+	
+	public void debita(float valor)
+	{
+		this.saldo -= valor;
+	}
+	
+	public void credita(float valor)
+	{
+		this.saldo += valor;
+	}
 	
 	public Jogador(int posX, int posY, int numeroPino) {
 		

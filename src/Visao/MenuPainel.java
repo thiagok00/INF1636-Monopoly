@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class MenuPainel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton dado,inicio;
+	private JButton dado,inicio,compra,venda;
 	
 	public MenuPainel () {
 		super();	
@@ -25,8 +25,16 @@ public class MenuPainel extends JPanel implements ActionListener{
 		inicio = new JButton("Iniciar Jogo");
 		inicio.addActionListener(this);
 		
+		compra = new JButton("Comprar");
+		compra.addActionListener(this);
+		
+		venda = new JButton("Vender");
+		venda.addActionListener(this);
+		
 		add(inicio);
 		add(dado);
+		add(compra);
+		add(venda);
 		
 		
 	}
@@ -47,6 +55,14 @@ public class MenuPainel extends JPanel implements ActionListener{
 			Dados nvDado = new Dados();
 			Jogo.getIstance().andarJogadorAtual(nvDado);
 		}
+		/*else if(arg0.getSource() == compra)
+		{
+			//IMPLEMENTAR A OPÇAO DE COMPRA DE TERRENO/NEGOCIO
+		}
+		else if(arg0.getSource() == venda)
+		{
+			//IMPLEMENTAR A OPÇAO DE VENDA DE TERRENO/NEGOCIO
+		}*/
 	}
 	
 }

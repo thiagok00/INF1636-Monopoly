@@ -23,7 +23,7 @@ public class Jogo {
 
 	public void iniciaJogo(int qtdJogadores){
 		this.qtdJogadoresTotal = qtdJogadores;
-				
+					
 		casas = new Casa[36];
 		int xInicial = 15;
 		int x = xInicial;
@@ -68,6 +68,10 @@ public class Jogo {
 			Ponto pos = this.casas[0].getPos(i);
 			jogadores[i] = new Jogador(pos.x,pos.y,i);
 		}
+		
+		//Inicializando o saldo de cada jogador
+				for(int j=0;j<qtdJogadores;j++)  
+					jogadores[j].setSaldo();
 	}
 	public void andarJogadorAtual(Dados dado) {
 		this.dado = dado;
