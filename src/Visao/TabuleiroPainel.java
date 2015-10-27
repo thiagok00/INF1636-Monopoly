@@ -1,24 +1,23 @@
-import java.util.*;
-
+package Visao;
 import javax.swing.*;
-import Artefatos.Pino;
+
+import Controlador.Jogador;
+import Controlador.Jogo;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-
 import javax.imageio.*;
 
-public class Tabuleiro extends JPanel {
+public class TabuleiroPainel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private Principal frame;
 
-	public Tabuleiro(Principal frame) {
-		this.frame = frame;
+
+	public TabuleiroPainel() {
 		this.setBounds(0,0,700,700);		
 	}
 	
-	/* Paint Component */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);		
 		BufferedImage i=null;
@@ -31,15 +30,16 @@ public class Tabuleiro extends JPanel {
 		}
 		g.drawImage(i, 0, 0, 700, 700, null);	
 
-		if (frame.pinos != null) {
+		Jogo jogo = Jogo.getIstance();
+		if (jogo.jogadores != null) {
 			
-			for (Pino pino : frame.pinos) {
-				g.drawImage(pino.getImage(), pino.getX(), pino.getY(), 16, 25, null);
+			for (Jogador jogador : jogo.jogadores) {
+				g.drawImage(jogador.getImagemPino(), jogador.getX(), jogador.getY(), 16, 25, null);
 			}
 		}
 		
-		int dado1 = frame.dado.getDado1();
-		int dado2 = frame.dado.getDado2();
+		int dado1 = jogo.dado.getDado1();
+		int dado2 = jogo.dado.getDado2();
 		String d1name = "Dado/"+Integer.toString(dado1)+".png";
 		String d2name = "Dado/"+Integer.toString(dado2)+".png";;
 		Image d1img=null,d2img=null;
@@ -53,12 +53,8 @@ public class Tabuleiro extends JPanel {
 			   System.exit(1);
 			}
 		g.drawImage(d1img, 304, 500, 32, 30, null);
-		g.drawImage(d2img, 344, 500, 32, 30, null);	
-		
-		
+		g.drawImage(d2img, 344, 500, 32, 30, null);			
 	}
-	
-
 	
 	
 }//End of Class

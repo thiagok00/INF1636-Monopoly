@@ -1,24 +1,21 @@
+package Visao;
 import javax.swing.*;
 
-import Artefatos.Dados;
+import Controlador.Dados;
+import Controlador.Jogo;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
-import java.util.stream.IntStream;
 
-public class MenuJogador extends JPanel implements ActionListener{
+public class MenuPainel extends JPanel implements ActionListener{
 
+	private static final long serialVersionUID = 1L;
+	private JButton dado,inicio;
 	
-	
-	Principal frame;
-	JButton dado,inicio;
-	
-	public MenuJogador (Principal frame) {
+	public MenuPainel () {
 		super();	
 		
-		this.frame = frame;
 		this.setBounds(700, 0, 100, 700);
 		setLayout(new GridLayout(0,1));
 		
@@ -43,13 +40,12 @@ public class MenuJogador extends JPanel implements ActionListener{
 		    if (input == null){
 		    	return;
 		    }    
-		    frame.iniciaJogo(Integer.parseInt(input));
+		    Jogo.getIstance().iniciaJogo(Integer.parseInt(input));
 			  
 		}
 		else if (arg0.getSource() == dado) {
 			Dados nvDado = new Dados();
-			System.out.println("Primeiro dado:" + nvDado.getDado1() + "Segundo dado:" + nvDado.getDado2());
-			frame.andarJogadorAtual(nvDado);
+			Jogo.getIstance().andarJogadorAtual(nvDado);
 		}
 	}
 	

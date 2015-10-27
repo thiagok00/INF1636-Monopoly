@@ -1,4 +1,4 @@
-package Artefatos;
+package Controlador;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -6,20 +6,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public class Pino {
+public class Jogador {
 
-	private Image imagem;
+	private Image imagemPino;
 	private int posX, posY;
 	private static final String[] arrayCores = {"pinos/red_pin.png","pinos/blue_pin.png","pinos/orange_pin.png","pinos/yellow_pin.png","pinos/purple_pin.png","pinos/black_pin.png"};
 	public int casaAtual = 0;
 	
-	public Pino(int posX, int posY, int numeroPino) {
+	public Jogador(int posX, int posY, int numeroPino) {
 		
 		this.posX = posX;
 		this.posY = posY;
 			
 		try{		
-			this.imagem = ImageIO.read(new File(arrayCores[numeroPino]));	
+			this.imagemPino = ImageIO.read(new File(arrayCores[numeroPino]));	
 		}
 		catch(IOException e) {
 			   System.out.println(e.getMessage());
@@ -27,8 +27,8 @@ public class Pino {
 			}	
 	}
 	
-	public Image getImage() {
-		return this.imagem;
+	public Image getImagemPino() {
+		return this.imagemPino;
 	}
 	
 	public void setPosition(Ponto pos){

@@ -1,4 +1,4 @@
-package Artefatos;
+package Controlador;
 import java.util.Random;
 
 public class Dados {

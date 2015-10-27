@@ -1,4 +1,4 @@
-package Artefatos;
+package Controlador;
 
 public class Ponto {
 	public int x;
