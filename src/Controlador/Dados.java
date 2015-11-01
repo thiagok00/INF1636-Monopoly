@@ -24,7 +24,7 @@ public class Dados {
 		return this.dado2;
 	}
 	public int getSoma() {
-		return this.dado1+this.dado2;
+		return 1;//this.dado1+this.dado2;
 		
 	}
 }

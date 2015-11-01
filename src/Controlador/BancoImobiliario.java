@@ -15,6 +15,8 @@ class BancoImobiliario {
 	SorteOuReves cartaAtual = null;
 	private int numeroRepeticoes = 0;
 	
+	BancoImobiliarioFacade facade = null;
+	
 	BancoImobiliario() {	
 	}
 
@@ -97,12 +99,21 @@ class BancoImobiliario {
 		if(casaAtual instanceof Terreno) {
 			Terreno terreno = (Terreno) casaAtual;
 			if(terreno.getDono() == null) {
-				//oferecer comprar
-				//se sim
-				//terreno.comprar(jogadorVez);
+				facade.atualizaComCasa();
+				if (facade.popUpCompra()){
+					terreno.comprar(jogadorVez);
+					facade.atualizaTabuleiro();
+				}
+				else {
+					facade.atualizaTabuleiro();
+				}
 			}
 			else {
 				terreno.pagarTaxa(jogadorVez, this.dado);
+				facade.atualizaTabuleiro();
+				facade.mostrarPagamento(terreno.getDono(),terreno.getTaxa());
+					
+				
 			}
 		}
 		else if (casaAtual instanceof Noticia) {

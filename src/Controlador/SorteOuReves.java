@@ -1,10 +1,15 @@
 package Controlador;
 
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 
@@ -15,7 +20,7 @@ public class SorteOuReves {
 	public Boolean passePrisao = false;
 	public Boolean irPrisao = false;
 	public Boolean recebeOutros = false;
-	public ImageIcon imagem;
+	public Image imagem;
 	
 	public SorteOuReves(int i) {
 		if(i==0)
@@ -42,8 +47,15 @@ public class SorteOuReves {
 	}
 	
 	public void setImagem (String path) {
-		imagem = new ImageIcon(path);
-	}
+		try {
+			this.imagem = ImageIO.read(new File(path));
+			   
+			}
+			catch(IOException e) {
+			   System.out.println(e.getMessage());
+			   System.exit(1);
+			}
+		}
 	
 	static public Queue<SorteOuReves> criarCartasBancoImobiliario() {
 		

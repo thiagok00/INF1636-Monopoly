@@ -82,6 +82,14 @@ public class Propriedade extends Terreno {
 		}
 		return false;
 	}
+
+	@Override
+	Double getTaxa() {
+		if(this.temComite)
+			return vetorPrecos[5]*1.0;
+		else
+			return vetorPrecos[this.qtdSedes]*1.0;
+	}
 	
 	
 }//End of Class

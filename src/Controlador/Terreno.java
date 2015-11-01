@@ -14,6 +14,7 @@ public abstract class Terreno extends Casa {
 	
 	public Terreno(int posX,int posY,int preco){
 		super(posX,posY);
+		this.valorCompra = preco;
 	}
 	
 	
@@ -55,6 +56,6 @@ public abstract class Terreno extends Casa {
 	}
 	
 	abstract Boolean pagarTaxa(Jogador pagador, Dados dado);
-	
+	abstract Double getTaxa();
 
 }//End of Class

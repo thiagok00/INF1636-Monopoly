@@ -29,6 +29,11 @@ public class Companhia extends Terreno {
 		return false;
 	}
 
+	@Override
+	Double getTaxa() {
+		return this.taxaAluguel*1.0;
+	}
+
 	
 	
 	
