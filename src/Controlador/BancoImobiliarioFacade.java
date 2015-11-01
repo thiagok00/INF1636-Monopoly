@@ -70,6 +70,11 @@ public class BancoImobiliarioFacade {
 		casaImg =  jogo.casas[jogo.jogadores[jogo.jogadorRodada].casaAtual].imagem;
 		frame.atualizaVisao();
 	}
+	
+	public void atualizaComSorteReves() {
+		casaImg = jogo.cartaAtual.imagem;
+		frame.atualizaVisao();
+	}
 	public void atualizaTabuleiro() {
 		casaImg = null;		
 		frame.atualizaVisao();

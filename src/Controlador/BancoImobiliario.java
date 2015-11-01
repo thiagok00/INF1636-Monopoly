@@ -125,13 +125,26 @@ class BancoImobiliario {
 		else if (casaAtual.sorteReves) {
 			cartaAtual = this.cartas.poll();
 			if(cartaAtual.irPrisao)
+			{
+				facade.atualizaComSorteReves();
 				prenderJogador(jogadorVez);
+			}
 			else if(cartaAtual.passePrisao)
+			{
+				facade.atualizaComSorteReves();
 				jogadorVez.passesPrisao++;
+			}
 			else if(cartaAtual.valor > 0)
+			{
+				facade.atualizaComSorteReves();
 				jogadorVez.credita(cartaAtual.valor);
+			}
 			else if(cartaAtual.valor < 0)
+			{
+				facade.atualizaComSorteReves();
 				jogadorVez.debita(cartaAtual.valor);
+			}
+				
 			
 			//carta desenha
 			cartas.add(cartaAtual);
