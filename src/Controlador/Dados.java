@@ -25,5 +25,6 @@ public class Dados {
 	}
 	public int getSoma() {
 		return this.dado1+this.dado2;
+		
 	}
 }

@@ -2,51 +2,19 @@ package Controlador;
 
 class BancoImobiliario {
 
-	
-	public int jogadorRodada= 0;
+	int jogadorRodada= 0;
 	int qtdJogadoresTotal=0;
 	
-	public Dados dado = new Dados();
-	public Jogador[] jogadores;
-	public Casa[] casas;
+	Dados dado = new Dados();
+	Jogador[] jogadores;
+	Casa[] casas;
 	
-
 	BancoImobiliario() {	
 	}
 
-	public void iniciarJogo(int qtdJogadores){
-		this.qtdJogadoresTotal = qtdJogadores;
-					
-		casas = new Casa[36];
-		int xInicial = 15;
-		int x = xInicial;
-		int yInicial = 610;
-		int y = yInicial;
-		
-		//Inicializando casas
-		int i;
-		for(i=0;i<10;i++){	
-			casas[i] = new Casa(x,y);
-			if(i!=9)
-			y-=65;
-			else{}
-							
-		}
-		for(;i<19;i++){	
-			if(i>=13)
-				x+=65;
-			else
-			x+=70;
-			casas[i] = new Casa(x,y);						
-		}
-		for(;i<28;i++){			
-			y+=65;
-			casas[i] = new Casa(x,y);					
-		}
-		for(;i<36;i++){			
-			x-=65;
-			casas[i] = new Casa(x,y);					
-		}
+	void iniciarJogo(int qtdJogadores){
+		this.qtdJogadoresTotal = qtdJogadores;	
+		this.casas = Casa.criarCasasBancoImobiliario();
 		carregaPinos(qtdJogadores);
 	}
 	
@@ -59,7 +27,8 @@ class BancoImobiliario {
 			jogadores[i] = new Jogador(pos.x,pos.y,i);
 		}
 	}
-	public void andarJogadorAtual(Dados dado) {
+	
+	void andarJogadorAtual(Dados dado) {
 		this.dado = dado;
 		if (jogadores != null) {
 			int qtdCasas = dado.getSoma();
@@ -71,8 +40,16 @@ class BancoImobiliario {
 		
 			jogadorRodada++;
 			jogadorRodada = jogadorRodada%qtdJogadoresTotal;
+			this.acaoJogador();
 		}
 	}
+	
+	private void acaoJogador() {
+		
+		Jogador jogadorVez = jogadores[this.jogadorRodada];
+		Casa casaAtual = this.casas[jogadorVez.casaAtual];	
+	}
+	
 	
 
 	

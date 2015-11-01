@@ -2,16 +2,51 @@ package Controlador;
 
 public class Casa {
 
-	private Jogador dono = null;
-	private double preco = 0.0;
-	private double taxaAluguel = 0.0;
-	private Boolean isHipotecado = false;
 	
-	private int posX, posY;
+	protected double valor = 0.0;
+	protected int posX, posY;
 	
-	public Casa(int posX,int posY){
+	static Casa[] criarCasasBancoImobiliario(){
+		
+		Casa casas[] = new Casa[36];
+		int xInicial = 15;
+		int x = xInicial;
+		int yInicial = 610;
+		int y = yInicial;
+		int vetPrecos[] = {0,220,0,200,300,220,300,220,0,150,140,0,60,180,300,0,260,200,220,0,0,200,180,140,120,0,200,60,260,0,160,0,240,150,100,0,0,100};
+		
+		//Inicializando casas
+		int i;
+		for(i=0;i<10;i++){	
+			casas[i] = new Casa(x,y,vetPrecos[i]);
+			if(i!=9)
+			y-=65;
+			else{}
+							
+		}
+		for(;i<19;i++){	
+			if(i>=13)
+				x+=65;
+			else
+			x+=70;
+			casas[i] = new Casa(x,y,vetPrecos[i]);						
+		}
+		for(;i<28;i++){			
+			y+=65;
+			casas[i] = new Casa(x,y,vetPrecos[i]);					
+		}
+		for(;i<36;i++){			
+			x-=65;
+			casas[i] = new Casa(x,y,vetPrecos[i]);					
+		}
+		return casas;
+	}
+	
+	
+	protected Casa(int posX,int posY,int valor){
 		this.posX = posX;
 		this.posY = posY;
+		this.valor = (double) valor;
 	}
 	
 	public Ponto getPos(int numPino) {
@@ -28,46 +63,6 @@ public class Casa {
 		return new Ponto(x,y);
 	}
 	
-	public Boolean comprarCasa(Jogador jogador) {
-		if (dono != null)
-			return false;
-		
-		if(jogador.debita(this.preco)) {
-			this.dono = jogador;
-			return true;
-		}
-		return false;
-	}
-	public Boolean hipotecarCasa(Jogador jogador) {
-		if(this.dono == null || this.dono != jogador)
-			return false;
-		
-		jogador.credita(preco);
-		this.isHipotecado = true;
-		return true;
-	}
-	public Boolean recuperarCasa(Jogador jogador) {
-		if(this.dono == null || !this.isHipotecado)
-			return false;
-					
-		if (jogador.debita(preco*1.2)) {
-			this.isHipotecado = false;
-			return true;
-		}
-		return false;
-	}
-	public Jogador getDono() {
-		return this.dono;
-	}
 	
-	public Boolean pagarAluguel(Jogador jogador) {
-		if(dono == null)
-			return false;
-		if(jogador.debita(taxaAluguel)) {
-			dono.credita(taxaAluguel);
-			return true;
-		}
-		//Jogador sem dinheiro pra pagar??
-		return false;
-	}
+	
 } //End of Class
