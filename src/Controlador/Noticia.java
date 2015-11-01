@@ -2,8 +2,9 @@ package Controlador;
 
 public class Noticia extends Casa {
 
+	double valor = 0.0;
 	Noticia(int posX, int posY, int valor) {
-		super(posX, posY, valor);
+		super(posX, posY);
 	}
 
 	Boolean fazerAcao(Jogador jogador) {

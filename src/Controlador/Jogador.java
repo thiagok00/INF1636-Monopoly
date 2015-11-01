@@ -25,7 +25,7 @@ public class Jogador {
 		this.posX = posX;
 		this.posY = posY;
 		this.numeroPino = numeroPino;
-		this.saldo = 25000.0;
+		this.saldo = 2500.0;
 		
 		try{		
 			this.imagemPino = ImageIO.read(new File(arrayCores[numeroPino]));	

@@ -89,12 +89,8 @@ public class SorteOuReves {
 		for(int i=1; i <16 ; i++) {
 			list.get(i+14).setImagem("sorteReves/sorte"+df.format(i)+".jpg");			
 		}
-		for (int i=0;i<30;i++)
-			System.out.println(list.get(i).imagem);
-		Collections.shuffle(list);
-		for (int i=0;i<30;i++)
-			System.out.println(list.get(i).imagem);
 		
+		Collections.shuffle(list);
 		return list;
 		
 	}

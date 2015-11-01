@@ -5,7 +5,7 @@ public class Companhia extends Terreno {
 
 	
 	
-	private Companhia(int posX,int posY,int preco){
+	Companhia(int posX,int posY,int preco){
 		super(posX,posY,preco);
 		
 		if(valorCompra <= 150) {

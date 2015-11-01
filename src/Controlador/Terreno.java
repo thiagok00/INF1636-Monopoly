@@ -10,7 +10,7 @@ public abstract class Terreno extends Casa {
 	protected Boolean isHipotecado = false;
 	
 	public Terreno(int posX,int posY,int preco){
-		super(posX,posY,preco);
+		super(posX,posY);
 	}
 	
 	
@@ -38,7 +38,7 @@ public abstract class Terreno extends Casa {
 	Boolean pagarHipoteca() {
 		if(dono != null) { 
 			if(isHipotecado) {
-				if(dono.debita(valor*1.2)){
+				if(dono.debita(valorCompra*1.2)){
 					isHipotecado = false;
 					return true;
 				}	

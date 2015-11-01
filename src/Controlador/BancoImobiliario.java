@@ -46,14 +46,15 @@ class BancoImobiliario {
 					jogadorVez.isPreso = false;
 					jogadorVez.rodadasPreso = 0;
 				}
-				else {
-					jogadorVez.rodadasPreso--;
-				}
 				if (jogadorVez.rodadasPreso == 0) {
 					jogadorVez.isPreso = false;
 				}
-				else
+				else {
+					jogadorVez.rodadasPreso--;
+					passarRodada();
 					return;
+				}
+			
 			}
 			else if(dado.getDado1() == dado.getDado2() && this.numeroRepeticoes == 3) {
 				prenderJogador(jogadorVez);	
@@ -74,7 +75,7 @@ class BancoImobiliario {
 			jogadorVez.setPosition(pos);
 			this.acaoJogador();
 			
-			if (dado.getDado1() == dado.getDado2())
+			if (dado.getDado1() == dado.getDado2() && !jogadorVez.isPreso)
 				this.numeroRepeticoes++;
 			else
 				passarRodada();
@@ -132,6 +133,7 @@ class BancoImobiliario {
 	
 	private void prenderJogador(Jogador jogador) {
 		Ponto pos = this.casas[9].getPos(jogadorRodada);
+		jogador.casaAtual = 9;
 		jogador.setPosition(pos);
 		jogador.prender();
 	}

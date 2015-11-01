@@ -6,10 +6,14 @@ public class Propriedade extends Terreno {
 	private Boolean temComite = false;
 	private double valorSede = 0.0;
 	private double valorComite = 0.0;
+	private int vetorPrecos[] = null; 
 	
-	
-	private Propriedade(int posX,int posY,int preco){
+	Propriedade(int posX,int posY,int preco,int valorSede, int valorComite,int vetorPrecos[]){
 		super(posX,posY,preco);
+		
+		this.valorSede = valorSede;
+		this.valorComite = valorComite;		
+		this.vetorPrecos = vetorPrecos; 
 	}
 
 	@Override
