@@ -1,7 +1,7 @@
 package Visao;
 import javax.swing.*;
 
-import Controlador.Jogo;
+import Controlador.BancoImobiliarioFacade;
 
 public class JogoFrame extends JFrame  {
 
@@ -12,7 +12,6 @@ public class JogoFrame extends JFrame  {
 	
 	private TabuleiroPainel tabuleiro;
 	private MenuPainel menu;
-	private Jogo jogo;
 	
 	public JogoFrame(){
 		this.setLayout(null);
@@ -20,7 +19,7 @@ public class JogoFrame extends JFrame  {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
-		jogo = Jogo.getIstance();
+		BancoImobiliarioFacade jogo = BancoImobiliarioFacade.getIstance();
 		jogo.frame = this;
 		
 		tabuleiro = new TabuleiroPainel();

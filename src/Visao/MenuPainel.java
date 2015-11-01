@@ -2,7 +2,7 @@ package Visao;
 import javax.swing.*;
 
 import Controlador.Dados;
-import Controlador.Jogo;
+import Controlador.BancoImobiliarioFacade;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class MenuPainel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton dado,inicio,compra,venda;
+	private JButton dado,inicio,venda;
 	
 	public MenuPainel () {
 		super();	
@@ -24,9 +24,6 @@ public class MenuPainel extends JPanel implements ActionListener{
 		
 		inicio = new JButton("Iniciar Jogo");
 		inicio.addActionListener(this);
-		
-		/*compra = new JButton("Comprar");
-		compra.addActionListener(this);*/
 		
 		venda = new JButton("Vender");
 		venda.addActionListener(this);
@@ -48,21 +45,16 @@ public class MenuPainel extends JPanel implements ActionListener{
 		    if (input == null){
 		    	return;
 		    }    
-		    Jogo.getIstance().iniciaJogo(Integer.parseInt(input));
+		    BancoImobiliarioFacade.getIstance().iniciarJogo(Integer.parseInt(input));
 			  
 		}
 		else if (arg0.getSource() == dado) {
 			Dados nvDado = new Dados();
-			Jogo.getIstance().andarJogadorAtual(nvDado);
+			BancoImobiliarioFacade.getIstance().rolarDado();
 		}
-		/*else if(arg0.getSource() == compra)
-		{
-			//IMPLEMENTAR A OPÇAO DE COMPRA DE TERRENO/NEGOCIO
-		}
-		else if(arg0.getSource() == venda)
-		{
+		else if(arg0.getSource() == venda) {
 			//IMPLEMENTAR A OPÇAO DE VENDA DE TERRENO/NEGOCIO
-		}*/
+		}
 	}
 	
-}
+}//End of Class

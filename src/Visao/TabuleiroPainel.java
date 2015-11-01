@@ -2,7 +2,7 @@ package Visao;
 import javax.swing.*;
 
 import Controlador.Jogador;
-import Controlador.Jogo;
+import Controlador.BancoImobiliarioFacade;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,12 +12,33 @@ import javax.imageio.*;
 public class TabuleiroPainel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-
+	private JLabel jogadorLabel = null;
+	private JLabel saldoLabel = null;
+	
 	public TabuleiroPainel() {
 		this.setBounds(0,0,700,700);		
 	}
 	
+	private void updateJogadorLabel(Jogador jogador) {
+		
+		String corJogador = Jogador.getCorJogador(jogador.getNumPino());
+		Double saldo = jogador.getSaldo();
+		
+		if(jogadorLabel == null) {
+			jogadorLabel = new JLabel();
+			jogadorLabel.setFont(jogadorLabel.getFont ().deriveFont (30.0f));
+			
+			saldoLabel = new JLabel();
+			saldoLabel.setFont(saldoLabel.getFont ().deriveFont (30.0f));
+			this.add(jogadorLabel);
+			this.add(saldoLabel);
+		}
+			jogadorLabel.setText("Vez do jogador "+corJogador);;
+			saldoLabel.setText("Saldo: "+saldo);
+			jogadorLabel.setBounds(110, 100, 500, 200);
+			saldoLabel.setBounds(110, 150, 500, 200);		
+	}
+		
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);		
 		BufferedImage i=null;
@@ -30,12 +51,14 @@ public class TabuleiroPainel extends JPanel {
 		}
 		g.drawImage(i, 0, 0, 700, 700, null);	
 
-		Jogo jogo = Jogo.getIstance();
-		if (jogo.jogadores != null) {
+		BancoImobiliarioFacade jogo = BancoImobiliarioFacade.getIstance();
+		if (jogo.isJogoIniciado()) {
 			
-			for (Jogador jogador : jogo.jogadores) {
+			this.updateJogadorLabel(jogo.getJogadorRodada());
+			Jogador jogadores[] = jogo.getJogadores();
+			for (Jogador jogador : jogadores) {
 				g.drawImage(jogador.getImagemPino(), jogador.getX(), jogador.getY(), 16, 25, null);
-			}
+			}	
 		}
 		
 		int dado1 = jogo.dado.getDado1();

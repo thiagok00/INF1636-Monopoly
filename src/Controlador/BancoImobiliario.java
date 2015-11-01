@@ -1,27 +1,20 @@
 package Controlador;
 
-import Visao.JogoFrame;
+class BancoImobiliario {
 
-public class Jogo {
-
-	private static Jogo jogo_instance = null;
-	private int jogadorRodada= 0;
-	private int qtdJogadoresTotal=0;
+	
+	public int jogadorRodada= 0;
+	int qtdJogadoresTotal=0;
 	
 	public Dados dado = new Dados();
 	public Jogador[] jogadores;
-	public JogoFrame frame;
 	public Casa[] casas;
 	
-	public static Jogo getIstance() {
-		if (jogo_instance == null)
-			jogo_instance = new Jogo();
-		return jogo_instance;
-	} 
-	private Jogo() {	
+
+	BancoImobiliario() {	
 	}
 
-	public void iniciaJogo(int qtdJogadores){
+	public void iniciarJogo(int qtdJogadores){
 		this.qtdJogadoresTotal = qtdJogadores;
 					
 		casas = new Casa[36];
@@ -55,12 +48,9 @@ public class Jogo {
 			casas[i] = new Casa(x,y);					
 		}
 		carregaPinos(qtdJogadores);
-		
-		//repaint
-		this.frame.atualizaVisao();
 	}
+	
 	private void carregaPinos(int qtdJogadores) {
-		
 		this.qtdJogadoresTotal = qtdJogadores;
 		this.jogadorRodada = 0;
 		this.jogadores = new Jogador[qtdJogadores];	
@@ -68,10 +58,6 @@ public class Jogo {
 			Ponto pos = this.casas[0].getPos(i);
 			jogadores[i] = new Jogador(pos.x,pos.y,i);
 		}
-		
-		//Inicializando o saldo de cada jogador
-				for(int j=0;j<qtdJogadores;j++)  
-					jogadores[j].setSaldo();
 	}
 	public void andarJogadorAtual(Dados dado) {
 		this.dado = dado;
@@ -86,8 +72,8 @@ public class Jogo {
 			jogadorRodada++;
 			jogadorRodada = jogadorRodada%qtdJogadoresTotal;
 		}
-		//repaint
-		this.frame.atualizaVisao();
 	}
+	
+
 	
 }//End of Class

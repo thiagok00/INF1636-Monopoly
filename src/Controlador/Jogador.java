@@ -13,14 +13,44 @@ public class Jogador {
 	private static final String[] arrayCores = {"pinos/red_pin.png","pinos/blue_pin.png","pinos/orange_pin.png","pinos/yellow_pin.png","pinos/purple_pin.png","pinos/black_pin.png"};
 	public int casaAtual = 0;
 	private double saldo;
+	private int numeroPino;
 	
-	public void setSaldo()
-	{
+	public Jogador(int posX, int posY, int numeroPino) {
+		
+		this.posX = posX;
+		this.posY = posY;
+		this.numeroPino = numeroPino;
 		this.saldo = 25000.0;
+		
+		try{		
+			this.imagemPino = ImageIO.read(new File(arrayCores[numeroPino]));	
+		}
+		catch(IOException e) {
+			   System.out.println(e.getMessage());
+			   System.exit(1);
+			}	
 	}
 	
-	public double getSaldo()
-	{
+	static public String getCorJogador(int numeroPino) {
+		switch(numeroPino){
+			case 0:
+				return "Vermelho";
+			case 1:
+				return "Azul";
+			case 2:
+				return "Laranja";
+			case 3:
+				return "Amarelo";
+			case 4:
+				return "Roxo";
+			case 5:
+				return "Preto";
+			default:
+				return "Invalido";
+		}
+	}	
+		
+	public double getSaldo() {
 		return this.saldo;
 	}
 	
@@ -35,19 +65,7 @@ public class Jogador {
 		this.saldo += valor;
 	}
 	
-	public Jogador(int posX, int posY, int numeroPino) {
-		
-		this.posX = posX;
-		this.posY = posY;
-			
-		try{		
-			this.imagemPino = ImageIO.read(new File(arrayCores[numeroPino]));	
-		}
-		catch(IOException e) {
-			   System.out.println(e.getMessage());
-			   System.exit(1);
-			}	
-	}
+
 	
 	public Image getImagemPino() {
 		return this.imagemPino;
@@ -63,5 +81,10 @@ public class Jogador {
 	public int getY() {
 		return this.posY;
 	}
+	
+	public int getNumPino(){
+		return this.numeroPino;
+	}
+	
 	
 }//End of Class
