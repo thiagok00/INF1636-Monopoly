@@ -6,6 +6,9 @@ public class Casa {
 	protected double valor = 0.0;
 	protected int posX, posY;
 	
+	Boolean vaiPrisao = false;
+	Boolean sorteReves = false;
+	
 	static Casa[] criarCasasBancoImobiliario(){
 		
 		Casa casas[] = new Casa[36];

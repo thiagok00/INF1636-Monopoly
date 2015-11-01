@@ -30,21 +30,25 @@ public class Propriedade extends Terreno {
 		return qtdSedes;
 	}
 	
-	Boolean construirSede() {	
-		if (qtdSedes<4) {
-			if(dono.debita(valorSede)){
-				qtdSedes++;
-				return true;
+	Boolean construirSede() {
+		if (dono != null && !dono.isPreso) {
+			if (qtdSedes<4) {
+				if(dono.debita(valorSede)){
+					qtdSedes++;
+					return true;
+				}
 			}
 		}
 		return false;	
 	}
 	
 	Boolean construirComite() {	
-		if (qtdSedes==4) {
-			if(dono.debita(valorComite)){
-				temComite = true;
-				return true;
+		if (dono != null && !dono.isPreso) {
+			if (qtdSedes==4) {
+				if(dono.debita(valorComite)){
+					temComite = true;
+					return true;
+				}
 			}
 		}
 		return false;	

@@ -15,7 +15,7 @@ public abstract class Terreno extends Casa {
 	
 	
 	Boolean comprar(Jogador comprador) {			
-		if (dono == null){
+		if (dono == null) {
 			if(comprador.debita(this.valorCompra)) {		
 				this.dono = comprador;		
 				return true;	
@@ -25,22 +25,30 @@ public abstract class Terreno extends Casa {
 	}
 	
 	Boolean hipotecar() {
-		if(!isHipotecado){
-			isHipotecado = true;
-			dono.credita(valorHipoteca);
-			return true;
+		if(dono!= null) {
+			if(!isHipotecado){
+				isHipotecado = true;
+				dono.credita(valorHipoteca);
+				return true;
+			}
 		}
 		return false;
 	}
 	
-	Boolean pagarHipoteca(Jogador dono) {
-		if(isHipotecado) {
-			if(dono.debita(valor*1.2)){
-				isHipotecado = false;
-				return true;
-			}	
+	Boolean pagarHipoteca() {
+		if(dono != null) { 
+			if(isHipotecado) {
+				if(dono.debita(valor*1.2)){
+					isHipotecado = false;
+					return true;
+				}	
+			}
 		}
 		return false;
+	}
+	
+	Jogador getDono() {
+		return this.dono;
 	}
 	
 	abstract Boolean pagarTaxa(Jogador pagador, Dados dado);

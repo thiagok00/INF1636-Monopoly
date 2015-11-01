@@ -14,6 +14,11 @@ public class Jogador {
 	public int casaAtual = 0;
 	private double saldo;
 	private int numeroPino;
+
+	
+	int passesPrisao = 0;
+	Boolean isPreso = false;
+	int rodadasPreso=0;
 	
 	public Jogador(int posX, int posY, int numeroPino) {
 		
@@ -85,6 +90,13 @@ public class Jogador {
 	public int getNumPino(){
 		return this.numeroPino;
 	}
+	public void prender() {
+		if(!isPreso) {
+			isPreso = true;
+			rodadasPreso = 3;
+		}
+	}
+	
 	
 	
 }//End of Class
