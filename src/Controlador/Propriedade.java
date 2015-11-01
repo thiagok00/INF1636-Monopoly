@@ -18,11 +18,17 @@ public class Propriedade extends Terreno {
 
 	@Override
 	Boolean pagarTaxa(Jogador pagador, Dados dado) {
-		if(dono != null) {
-			if(pagador.debita(taxaAluguel)) {
-				dono.credita(taxaAluguel);
-			}		
-		}
+		if(dono != null) 
+			if(temComite)
+			{
+				if(pagador.debita(vetorPrecos[5])) {
+					dono.credita(vetorPrecos[5]);
+				}
+			}
+			else
+			if(pagador.debita(vetorPrecos[qtdSedes])) {
+				dono.credita(vetorPrecos[qtdSedes]);
+			}	
 		return false;
 	}
 	

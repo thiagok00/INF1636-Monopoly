@@ -1,7 +1,7 @@
 package Controlador;
 
 public class Companhia extends Terreno {
-	
+	protected double taxaAluguel = 0.0;
 
 	
 	

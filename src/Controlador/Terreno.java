@@ -5,9 +5,12 @@ public abstract class Terreno extends Casa {
 	protected double valorCompra;
 	protected double hipoteca;
 	protected Jogador dono = null;	
-	protected double taxaAluguel = 0.0;
 	protected double valorHipoteca = 0.0;
 	protected Boolean isHipotecado = false;
+	
+	public double getValorCompra() {
+		return this.valorCompra;
+	}
 	
 	public Terreno(int posX,int posY,int preco){
 		super(posX,posY);
