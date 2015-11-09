@@ -60,8 +60,13 @@ public class JogoFrame extends JFrame  {
 	public void mostrarPagamento(String dono, double taxa) {
 		
 		String msg = "Você pagou R$"+taxa+" para o Jogador "+dono;
-		JOptionPane.showMessageDialog(null,msg,"Pagamento de Aluguel",JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(this,msg,"Pagamento de Aluguel",JOptionPane.PLAIN_MESSAGE);
 		
+	}
+	
+	public void mostrarProLabore() {
+		String msg = "Você recebeu R$200!";
+		JOptionPane.showMessageDialog(this,msg,"Pagamento de Pró-Labore",JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	

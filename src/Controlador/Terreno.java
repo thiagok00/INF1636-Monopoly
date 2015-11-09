@@ -55,6 +55,11 @@ public abstract class Terreno extends Casa {
 		return this.dono;
 	}
 	
+	double getValor() {
+		return this.valorCompra;
+	}
+
+	
 	abstract Boolean pagarTaxa(Jogador pagador, Dados dado);
 	abstract Double getTaxa();
 

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class MenuPainel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton dado,inicio,venda;
+	private JButton dado,inicio,venda,compra,passe;
 	
 	public MenuPainel () {
 		super();	
@@ -21,20 +21,29 @@ public class MenuPainel extends JPanel implements ActionListener{
 		
 		dado = new JButton("Rolar dado");
 		dado.addActionListener(this);
-		
+
 		inicio = new JButton("Iniciar Jogo");
 		inicio.addActionListener(this);
 		
+		/*compra = new JButton("Comprar");
+		compra.addActionListener(this);*/
+		
+		
 		venda = new JButton("Vender");
 		venda.addActionListener(this);
+		
+		passe = new JButton("Passar Vez");
+		passe.addActionListener(this);
 		
 		add(inicio);
 		add(dado);
 		//add(compra);
 		add(venda);
+		add(passe);
 		
 		
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
@@ -46,14 +55,27 @@ public class MenuPainel extends JPanel implements ActionListener{
 		    	return;
 		    }    
 		    BancoImobiliarioFacade.getIstance().iniciarJogo(Integer.parseInt(input));
+		    
 			  
 		}
 		else if (arg0.getSource() == dado) {
-			Dados nvDado = new Dados();
+			
 			BancoImobiliarioFacade.getIstance().rolarDado();
+			dado.setEnabled(false);
+		}
+		else if(arg0.getSource() == compra) {
+			
+			//IMPLEMENTAR A OPÇAO DE COMPRA DE TERRENO/NEGOCIO
 		}
 		else if(arg0.getSource() == venda) {
+			
 			//IMPLEMENTAR A OPÇAO DE VENDA DE TERRENO/NEGOCIO
+			
+		}
+		else if(arg0.getSource() == passe) {
+			
+			BancoImobiliarioFacade.getIstance().PassarRodada();
+			dado.setEnabled(true);
 		}
 	}
 	

@@ -79,19 +79,7 @@ public class TabuleiroPainel extends JPanel {
 		g.drawImage(d1img, 304, 500, 32, 30, null);
 		g.drawImage(d2img, 344, 500, 32, 30, null);	
 		
-		/*
-		String cartaImagem = jogo.getCartaImagem();
-		if ( cartaImagem != null ) {
-			Image imgCarta = null;
-		try {
-			imgCarta = ImageIO.read(new File(cartaImagem));
-			   
-			}
-			catch(IOException e) {
-			   System.out.println(e.getMessage());
-			   System.exit(1);
-			}
-	*/
+	
 		Image imgCarta = jogo.casaImg;
 		if (imgCarta != null){
 			g.drawImage(imgCarta,304, 250, 280, 350, null);

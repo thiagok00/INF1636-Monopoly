@@ -5,6 +5,7 @@ package Controlador;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import Visao.JogoFrame;
 
@@ -35,9 +36,20 @@ public class BancoImobiliarioFacade {
 	}
 	public void rolarDado() {
 		dado = new Dados();
+		
 		if (isJogoIniciado())
 			jogo.andarJogadorAtual(this.dado);	
 		frame.atualizaVisao();
+	}
+	
+	//Ativado pelo botao de Passar Rodada
+	public void PassarRodada() {
+		if(jogo.jogadorRodada==(jogo.qtdJogadoresTotal-1))
+			jogo.jogadorRodada=0;
+		else
+		jogo.jogadorRodada++;
+		
+		jogo.facade.atualizaTabuleiro();
 	}
 	
 	public Boolean isJogoIniciado() {
@@ -90,6 +102,10 @@ public class BancoImobiliarioFacade {
 	public void mostrarPagamento(Jogador dono, double taxa) {
 		
 		frame.mostrarPagamento(Jogador.getCorJogador(dono.getNumPino()),taxa);
+	}
+	
+	public void mostrarProLabore() {
+		frame.mostrarProLabore();
 	}
 	
 	

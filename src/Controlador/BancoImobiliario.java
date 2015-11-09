@@ -53,14 +53,14 @@ class BancoImobiliario {
 				}
 				else {
 					jogadorVez.rodadasPreso--;
-					passarRodada();
+					//passarRodada();
 					return;
 				}
 			
 			}
 			else if(dado.getDado1() == dado.getDado2() && this.numeroRepeticoes == 3) {
 				prenderJogador(jogadorVez);	
-				passarRodada();
+				//passarRodada();
 				return;
 			} 			
 			
@@ -68,7 +68,10 @@ class BancoImobiliario {
 			
 			if (novaCasa>=36) {
 				jogadorVez.credita(200);
+
 				//Popup avisando que recebeu 200
+				facade.mostrarProLabore();
+				
 				novaCasa = (novaCasa)%36;
 			}
 			
@@ -79,17 +82,17 @@ class BancoImobiliario {
 			
 			if (dado.getDado1() == dado.getDado2() && !jogadorVez.isPreso)
 				this.numeroRepeticoes++;
-			else
-				passarRodada();
+			//else
+				//passarRodada();
 			
 		}
 	}
 	
-	private void passarRodada() {
+/*	private void passarRodada() {
 		jogadorRodada++;
 		jogadorRodada = jogadorRodada%qtdJogadoresTotal;
 		this.numeroRepeticoes = 0;
-	}
+	}*/
 	
 	private void acaoJogador() {
 		
@@ -118,6 +121,9 @@ class BancoImobiliario {
 		}
 		else if (casaAtual instanceof Noticia) {
 			((Noticia) casaAtual).fazerAcao(jogadorVez);
+			facade.atualizaTabuleiro();
+			//ATUALIZAR COM POPUP "VOCE RECEBEU 200" OU "VOCE PERDEU 200 LOSER"
+			
 		}
 		else if (casaAtual.vaiPrisao) {
 			prenderJogador(jogadorVez);
@@ -142,7 +148,7 @@ class BancoImobiliario {
 			else if(cartaAtual.valor < 0)
 			{
 				facade.atualizaComSorteReves();
-				jogadorVez.debita(cartaAtual.valor);
+				jogadorVez.debita((-1)*cartaAtual.valor);
 			}
 				
 			
