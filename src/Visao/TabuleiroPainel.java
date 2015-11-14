@@ -15,8 +15,17 @@ public class TabuleiroPainel extends JPanel {
 	private JLabel jogadorLabel = null;
 	private JLabel saldoLabel = null;
 	
+	
+	
+	private Image cartaImg;
+	
 	public TabuleiroPainel() {
 		this.setBounds(0,0,700,700);		
+	}
+	
+	public void repaintWithImage(Image img) {
+		cartaImg = img;
+		this.repaint();
 	}
 	
 	private void updateJogadorLabel(Jogador jogador) {
@@ -80,13 +89,10 @@ public class TabuleiroPainel extends JPanel {
 		g.drawImage(d2img, 344, 500, 32, 30, null);	
 		
 	
-		Image imgCarta = jogo.casaImg;
-		if (imgCarta != null){
-			g.drawImage(imgCarta,304, 250, 280, 350, null);
-		}
+		if (cartaImg != null) {			
+			g.drawImage(cartaImg,304, 250, 280, 350, null);	
+		}	
+	}			
 		
-	}
-	
-	
 }//End of Class
 

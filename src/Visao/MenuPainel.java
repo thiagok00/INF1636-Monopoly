@@ -11,7 +11,8 @@ import java.awt.event.ActionListener;
 public class MenuPainel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton dado,inicio,venda,compra,passe;
+	private JButton dado,inicio,venda,construir,passe;
+	JogoFrame frame;
 	
 	public MenuPainel () {
 		super();	
@@ -25,8 +26,8 @@ public class MenuPainel extends JPanel implements ActionListener{
 		inicio = new JButton("Iniciar Jogo");
 		inicio.addActionListener(this);
 		
-		/*compra = new JButton("Comprar");
-		compra.addActionListener(this);*/
+		construir = new JButton("Construir");
+		construir.addActionListener(this);
 		
 		
 		venda = new JButton("Vender");
@@ -35,15 +36,20 @@ public class MenuPainel extends JPanel implements ActionListener{
 		passe = new JButton("Passar Vez");
 		passe.addActionListener(this);
 		
+		
+		
+		passe.setEnabled(false);
+	    construir.setEnabled(false);
+	    venda.setEnabled(false);
+		
 		add(inicio);
 		add(dado);
-		//add(compra);
+		add(construir);
 		add(venda);
 		add(passe);
-		
-		
+	 
+
 	}
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
@@ -54,18 +60,27 @@ public class MenuPainel extends JPanel implements ActionListener{
 		    if (input == null){
 		    	return;
 		    }    
-		    BancoImobiliarioFacade.getIstance().iniciarJogo(Integer.parseInt(input));
 		    
+		    BancoImobiliarioFacade jogo = BancoImobiliarioFacade.getIstance();
+		    dado.setEnabled(true);
+		    passe.setEnabled(false);
+		    construir.setEnabled(false);
+		    venda.setEnabled(false);
+		    jogo.iniciarJogo(Integer.parseInt(input),frame,frame);
 			  
 		}
 		else if (arg0.getSource() == dado) {
 			
-			BancoImobiliarioFacade.getIstance().rolarDado();
-			dado.setEnabled(false);
+			if (!BancoImobiliarioFacade.getIstance().rolarDado()) {
+				dado.setEnabled(false);
+			    passe.setEnabled(true);
+			    construir.setEnabled(true);
+			    venda.setEnabled(true);
+			}
 		}
-		else if(arg0.getSource() == compra) {
+		else if(arg0.getSource() == construir) {
 			
-			//IMPLEMENTAR A OPÇAO DE COMPRA DE TERRENO/NEGOCIO
+			//IMPLEMENTAR A OPÇAO DE CONSTRUIR COMITE ETC
 		}
 		else if(arg0.getSource() == venda) {
 			
@@ -74,8 +89,12 @@ public class MenuPainel extends JPanel implements ActionListener{
 		}
 		else if(arg0.getSource() == passe) {
 			
-			BancoImobiliarioFacade.getIstance().PassarRodada();
-			dado.setEnabled(true);
+			if (BancoImobiliarioFacade.getIstance().PassarRodada()) {
+				dado.setEnabled(true);
+				passe.setEnabled(false);
+				construir.setEnabled(false);
+				venda.setEnabled(false);
+			}
 		}
 	}
 	

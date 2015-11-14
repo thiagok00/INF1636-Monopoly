@@ -17,6 +17,19 @@ public class Noticia extends Casa {
 		}
 	}
 	
+	public String getMensagem() {
+		String msg;
+		if(valor>=0){
+			msg = "Você recebeu ";
+		}
+		else {
+			msg = "Você perdeu ";
+		}
+		msg = msg + "$" + valor + ".";
+		return msg;
+	}
+	
+	
 	private Boolean receba(Jogador jogador, double valor) {
 		if (jogador != null) {
 			jogador.credita(valor);
@@ -31,6 +44,5 @@ public class Noticia extends Casa {
 		}
 		return false;
 	}
-
 
 }//End of Class

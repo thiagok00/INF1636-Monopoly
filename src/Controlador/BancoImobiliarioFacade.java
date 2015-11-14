@@ -4,9 +4,6 @@ package Controlador;
 
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
 import Visao.JogoFrame;
 
 public class BancoImobiliarioFacade {
@@ -15,41 +12,35 @@ public class BancoImobiliarioFacade {
 	private BancoImobiliario jogo = null;
 	
 	public Dados dado = new Dados();
-	public JogoFrame frame;
 	public Image casaImg;
 	
 	
 	public static BancoImobiliarioFacade getIstance() {
+		
 		return BancoImobiliarioFacade.singleton;		
 	}
 	private BancoImobiliarioFacade() {
 	}
 	
-	public void iniciarJogo(int qtdJogadores) {
+	public void iniciarJogo(int qtdJogadores,ControladorEventos controlador, ObservadorJogo obj) {
 		
-		this.jogo = new BancoImobiliario();
-		jogo.facade = this;
+		this.jogo = new BancoImobiliario(controlador);
+		jogo.register(obj);
 		jogo.iniciarJogo(qtdJogadores);
 		
-		frame.repaint();
-				
 	}
-	public void rolarDado() {
-		dado = new Dados();
-		
+	public boolean rolarDado() {
+		dado = new Dados();		
 		if (isJogoIniciado())
-			jogo.andarJogadorAtual(this.dado);	
-		frame.atualizaVisao();
+			return jogo.andarJogadorAtual(this.dado);	
+		return true;
 	}
 	
 	//Ativado pelo botao de Passar Rodada
-	public void PassarRodada() {
-		if(jogo.jogadorRodada==(jogo.qtdJogadoresTotal-1))
-			jogo.jogadorRodada=0;
-		else
-		jogo.jogadorRodada++;
-		
-		jogo.facade.atualizaTabuleiro();
+	public boolean PassarRodada() {
+		if (isJogoIniciado())
+			return jogo.passarRodada();
+		return false;
 	}
 	
 	public Boolean isJogoIniciado() {
@@ -77,37 +68,12 @@ public class BancoImobiliarioFacade {
 	public Double getJogadorVezSaldo() {
 		return jogo.jogadores[jogo.jogadorRodada].getSaldo();
 	}
-	
-	public void atualizaComCasa() {
-		casaImg =  jogo.casas[jogo.jogadores[jogo.jogadorRodada].casaAtual].imagem;
-		frame.atualizaVisao();
-	}
-	
-	public void atualizaComSorteReves() {
-		casaImg = jogo.cartaAtual.imagem;
-		frame.atualizaVisao();
-	}
-	public void atualizaTabuleiro() {
-		casaImg = null;		
-		frame.atualizaVisao();
-	}
-	
-	public Boolean popUpCompra() {
 		
-		Terreno terreno = (Terreno) jogo.casas[jogo.jogadores[jogo.jogadorRodada].casaAtual];
-		frame.atualizaVisao();
-		return frame.oferecerCompra(terreno.getValorCompra());
+	public void registraObserver(ObservadorJogo obj) {
+		System.out.println("registrando facade");
+		if(isJogoIniciado())
+			jogo.register(obj);
 	}
-	
-	public void mostrarPagamento(Jogador dono, double taxa) {
-		
-		frame.mostrarPagamento(Jogador.getCorJogador(dono.getNumPino()),taxa);
-	}
-	
-	public void mostrarProLabore() {
-		frame.mostrarProLabore();
-	}
-	
 	
 	
 	
