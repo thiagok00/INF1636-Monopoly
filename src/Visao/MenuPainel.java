@@ -1,8 +1,6 @@
 package Visao;
 import javax.swing.*;
-
-import Controlador.Dados;
-import Controlador.BancoImobiliarioFacade;
+import Jogo.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +9,7 @@ import java.awt.event.ActionListener;
 public class MenuPainel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton dado,inicio,venda,construir,passe;
+	private JButton dado,inicio,venda,construir,passe,hipotecas;
 	JogoFrame frame;
 	
 	public MenuPainel () {
@@ -33,6 +31,9 @@ public class MenuPainel extends JPanel implements ActionListener{
 		venda = new JButton("Vender");
 		venda.addActionListener(this);
 		
+		hipotecas = new JButton("Hipotecas");
+		venda.addActionListener(this);
+		
 		passe = new JButton("Passar Vez");
 		passe.addActionListener(this);
 		
@@ -41,11 +42,13 @@ public class MenuPainel extends JPanel implements ActionListener{
 		passe.setEnabled(false);
 	    construir.setEnabled(false);
 	    venda.setEnabled(false);
-		
+		hipotecas.setEnabled(false);
+	    
 		add(inicio);
 		add(dado);
 		add(construir);
 		add(venda);
+		add(hipotecas);
 		add(passe);
 	 
 
@@ -53,38 +56,46 @@ public class MenuPainel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
+		BancoImobiliarioFacade jogo = BancoImobiliarioFacade.getIstance();
+		
 		if (arg0.getSource() == inicio) {
-			String[] choices = { "2", "3", "4", "5", "6" };
-		    String input = (String) JOptionPane.showInputDialog(null, "Quantidade de jogadores?",
+			Integer[] choices = { 2, 3, 4, 5, 6};
+		    Integer input = (Integer) JOptionPane.showInputDialog(this.getParent(), "Quantidade de jogadores?",
 		            "Iniciar Jogo", JOptionPane.QUESTION_MESSAGE, null,choices,choices[0]);
 		    if (input == null){
 		    	return;
 		    }    
-		    
-		    BancoImobiliarioFacade jogo = BancoImobiliarioFacade.getIstance();
+		   
 		    dado.setEnabled(true);
 		    passe.setEnabled(false);
 		    construir.setEnabled(false);
 		    venda.setEnabled(false);
-		    jogo.iniciarJogo(Integer.parseInt(input),frame,frame);
+		    hipotecas.setEnabled(false);
+		    jogo.iniciarJogo(input,frame.controladorEventos,frame.tabuleiro);
 			  
 		}
 		else if (arg0.getSource() == dado) {
 			
-			if (!BancoImobiliarioFacade.getIstance().rolarDado()) {
+			if (!jogo.rolarDado(0,0)) {
 				dado.setEnabled(false);
 			    passe.setEnabled(true);
 			    construir.setEnabled(true);
 			    venda.setEnabled(true);
+			    hipotecas.setEnabled(true);
+			}
+			else if (!jogo.isJogoIniciado()) {
+				frame.tabuleiro.update();
 			}
 		}
 		else if(arg0.getSource() == construir) {
 			
-			//IMPLEMENTAR A OPÇAO DE CONSTRUIR COMITE ETC
 		}
 		else if(arg0.getSource() == venda) {
 			
 			//IMPLEMENTAR A OPÇAO DE VENDA DE TERRENO/NEGOCIO
+			
+		}
+		else if (arg0.getSource() == hipotecas){
 			
 		}
 		else if(arg0.getSource() == passe) {
@@ -94,6 +105,7 @@ public class MenuPainel extends JPanel implements ActionListener{
 				passe.setEnabled(false);
 				construir.setEnabled(false);
 				venda.setEnabled(false);
+				hipotecas.setEnabled(false);
 			}
 		}
 	}

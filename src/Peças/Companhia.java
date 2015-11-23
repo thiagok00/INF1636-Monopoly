@@ -1,12 +1,14 @@
-package Controlador;
+package Peças;
+
 
 public class Companhia extends Terreno {
 	protected double taxaAluguel = 0.0;
 
 	
 	
-	Companhia(int posX,int posY,int preco){
-		super(posX,posY,preco);
+	Companhia(int numeroCasa, double preco){
+		
+		super(numeroCasa, preco);
 		
 		if(valorCompra <= 150) {
 			taxaAluguel = 40;
@@ -19,7 +21,7 @@ public class Companhia extends Terreno {
 	}
 
 	@Override
-	Boolean pagarTaxa(Jogador pagador, Dados dado) {
+	public Boolean pagarTaxa(Jogador pagador, Dados dado) {
 		if(dono != null) {
 			double valorPagar = taxaAluguel*dado.getSoma();	
 			if(pagador.debita(valorPagar)) {
@@ -30,7 +32,7 @@ public class Companhia extends Terreno {
 	}
 
 	@Override
-	Double getTaxa() {
+	public Double getTaxa() {
 		return this.taxaAluguel*1.0;
 	}
 

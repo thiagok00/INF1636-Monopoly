@@ -1,7 +1,8 @@
-package Controlador;
-
+package Jogo;
+import Peças.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Queue;
 
 enum EstadosJogo {
@@ -21,7 +22,7 @@ class BancoImobiliario implements ObservadoJogo {
 	SorteOuReves cartaAtual = null;
 	private int numeroRepeticoes = 0;
 	
-	private ControladorEventos controlador = null;
+	ControladorEventos controlador = null;
 	private List<ObservadorJogo> lst = new ArrayList<ObservadorJogo>();
 	private EstadosJogo estadoAtual;
 	
@@ -44,8 +45,7 @@ class BancoImobiliario implements ObservadoJogo {
 		this.jogadorRodada = 0;
 		this.jogadores = new Jogador[qtdJogadores];	
 		for(int i=0; i < qtdJogadores; i++) {
-			Ponto pos = this.casas[0].getPos(i);
-			jogadores[i] = new Jogador(pos.x,pos.y,i);
+			jogadores[i] = new Jogador(i);
 		}
 	}
 	
@@ -60,11 +60,12 @@ class BancoImobiliario implements ObservadoJogo {
 					jogadorVez.isPreso = false;
 					jogadorVez.rodadasPreso = 0;
 				}
-				if (jogadorVez.rodadasPreso == 0) {
-					jogadorVez.isPreso = false;
-				}
 				else {
 					jogadorVez.rodadasPreso--;
+					if (jogadorVez.rodadasPreso == 0)
+						jogadorVez.isPreso = false;
+					
+					this.notificarObservadores();
 					this.estadoAtual = EstadosJogo.PosDado;
 					return false;
 				}
@@ -88,8 +89,7 @@ class BancoImobiliario implements ObservadoJogo {
 			}
 			
 			jogadorVez.casaAtual = novaCasa;
-			Ponto pos = this.casas[novaCasa].getPos(jogadorRodada);
-			jogadorVez.setPosition(pos);
+			this.notificarObservadores();
 			this.acaoJogador();
 			
 			if (dado.getDado1() == dado.getDado2() && !jogadorVez.isPreso) {
@@ -115,10 +115,57 @@ class BancoImobiliario implements ObservadoJogo {
 			 jogadorRodada++;
 		 
 		 this.estadoAtual = EstadosJogo.PreDado;
+		 this.numeroRepeticoes = 0;
 		 this.notificarObservadores();
 		 return true;
 	}
 	
+
+	boolean acaoCasa(int numeroCasa) {
+		Jogador jogadorVez = jogadores[this.jogadorRodada];
+		
+		
+		if (numeroCasa < 0 || numeroCasa > 35)
+			return false;
+		Casa casa = casas[numeroCasa];
+		if (jogadorVez.isPreso || this.estadoAtual == EstadosJogo.PreDado)
+			return false;
+			
+		
+		
+		if (casa instanceof Terreno) {
+			Jogador dono = ((Terreno)casa).getDono();
+			if (casa instanceof Companhia) {
+				Companhia comp = (Companhia) casa;
+				if (dono == jogadorVez) {
+					System.out.println("//oferecer hipotecar");
+				}
+				else if (dono != null){
+					System.out.println("//fazer oferta companhia");
+				}
+			}
+			else if (casa instanceof Propriedade) {
+				Propriedade prop = (Propriedade) casa;
+				if (dono == jogadorVez) {
+					if (prop.isHipotecado) {
+						System.out.println("//pagar hipoteca");
+					}
+					else {
+						System.out.println("//construir algo");
+					}
+				}
+				else if (dono != null) {
+					System.out.println("//fazer uma oferta");
+				}
+			}
+		}
+	
+		
+		return false;
+	}
+	 
+	 
+	 
 	private void acaoJogador() {
 		
 		Jogador jogadorVez = jogadores[this.jogadorRodada];
@@ -127,9 +174,9 @@ class BancoImobiliario implements ObservadoJogo {
 		if(casaAtual instanceof Terreno) {
 			Terreno terreno = (Terreno) casaAtual;
 			if(terreno.getDono() == null) {
-				this.notificarObservadores(casas[jogadores[jogadorRodada].casaAtual].imagem);
+				this.notificarObservadores(terreno.numeroCasa,false);
 				if (controlador.oferecerCompra(terreno.getValorCompra())){
-					terreno.comprar(jogadorVez);
+					jogadorVez.comprarTerreno(terreno);
 					this.notificarObservadores();
 				}
 				else {
@@ -138,8 +185,7 @@ class BancoImobiliario implements ObservadoJogo {
 			}
 			else {
 				terreno.pagarTaxa(jogadorVez, this.dado);
-				
-				String donoString = Jogador.getCorJogador(terreno.getDono().getNumPino());
+				String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
 				String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
 				this.notificarObservadores();
 				this.notificarMensagens(msg, "Pagamento de Aluguel");
@@ -169,7 +215,7 @@ class BancoImobiliario implements ObservadoJogo {
 			else if(cartaAtual.valor < 0)	
 				jogadorVez.debita((-1)*cartaAtual.valor);
 
-			this.notificarObservadores(cartaAtual.imagem);
+			this.notificarObservadores(cartaAtual.numCarta,true);
 			cartas.add(cartaAtual);
 			cartaAtual = null;
 			}
@@ -180,19 +226,21 @@ class BancoImobiliario implements ObservadoJogo {
 	}
 	
 	private void prenderJogador(Jogador jogador) {
-		Ponto pos = this.casas[9].getPos(jogadorRodada);
 		jogador.casaAtual = 9;
-		jogador.setPosition(pos);
 		jogador.prender();
+		this.notificarObservadores();
 	}
+
+			
+	
 /*	
  *	Metodos interface ObservadoJogo
  *
  */
 	@Override
 	public void register(ObservadorJogo obj) {
-		if (obj != null) {
-			lst.add(obj);System.out.println("adicionou"); 	}	
+		if (obj != null) 
+			lst.add(obj);
 	}
 
 	@Override
@@ -210,10 +258,10 @@ class BancoImobiliario implements ObservadoJogo {
 	}
 
 	@Override
-	public void notificarObservadores(Object img) {
+	public void notificarObservadores(int numCarta, boolean isSorteReves) {
 		int i;
 		for (i = 0; i < lst.size() ; i ++) {
-			lst.get(i).update(img);
+			lst.get(i).update(numCarta,isSorteReves);
 		}
 		
 	}
@@ -226,12 +274,5 @@ class BancoImobiliario implements ObservadoJogo {
 		}
 		
 	}
-
-	@Override
-	public Object getUpdate(ObservadorJogo obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 }//End of Class

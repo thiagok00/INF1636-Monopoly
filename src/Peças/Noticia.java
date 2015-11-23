@@ -1,14 +1,14 @@
-package Controlador;
+package Peças;
 
 public class Noticia extends Casa {
 
-	double valor = 0.0;
-	Noticia(int posX, int posY, int valor) {
-		super(posX, posY);
+	final double valor;
+	Noticia(int numeroCasa, int valor) {
+		super(numeroCasa);
 		this.valor = valor;
 	}
 
-	Boolean fazerAcao(Jogador jogador) {
+	public Boolean fazerAcao(Jogador jogador) {
 		if(valor>=0){
 			return receba(jogador, valor);
 		}

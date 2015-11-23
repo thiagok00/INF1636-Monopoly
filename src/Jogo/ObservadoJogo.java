@@ -1,4 +1,4 @@
-package Controlador;
+package Jogo;
 
 
 public interface ObservadoJogo {
@@ -8,11 +8,8 @@ public interface ObservadoJogo {
 	     
 	    //method to notify observers of change
 	    public void notificarObservadores();
-	    public void notificarObservadores(Object img);
+	    public void notificarObservadores(int numero, boolean isSorteReves);
 	    public void notificarMensagens(String msg, String titulo);
-
-	    //method to get updates from subject
-	    public Object getUpdate(ObservadorJogo obj);
 		
 }
 	

@@ -1,4 +1,4 @@
-package Controlador;
+package Visao;
 
 public class Ponto {
 	public int x;

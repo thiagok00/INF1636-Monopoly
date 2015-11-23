@@ -1,4 +1,4 @@
-package Controlador;
+package Peças;
 import java.util.Random;
 
 public class Dados {
@@ -15,6 +15,11 @@ public class Dados {
 		
 		this.dado1 = randomNumber;
 		this.dado2 = randomNumber2;
+	}
+	public Dados(int dado1,int dado2) {
+		this.dado1 = dado1;
+		this.dado2 = dado2;
+		
 	}
 	
 	public int getDado1(){

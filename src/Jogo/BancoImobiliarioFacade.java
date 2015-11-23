@@ -1,10 +1,5 @@
-package Controlador;
-
-
-
-import java.awt.Image;
-
-import Visao.JogoFrame;
+package Jogo;
+import Peças.*;
 
 public class BancoImobiliarioFacade {
 
@@ -12,8 +7,6 @@ public class BancoImobiliarioFacade {
 	private BancoImobiliario jogo = null;
 	
 	public Dados dado = new Dados();
-	public Image casaImg;
-	
 	
 	public static BancoImobiliarioFacade getIstance() {
 		
@@ -29,8 +22,11 @@ public class BancoImobiliarioFacade {
 		jogo.iniciarJogo(qtdJogadores);
 		
 	}
-	public boolean rolarDado() {
-		dado = new Dados();		
+	public boolean rolarDado(int dado1, int dado2) {
+		if(dado1 > 0 && dado2 > 0)
+			dado = new Dados(dado1,dado2);
+		else 
+			dado = new Dados();		
 		if (isJogoIniciado())
 			return jogo.andarJogadorAtual(this.dado);	
 		return true;
@@ -61,20 +57,19 @@ public class BancoImobiliarioFacade {
 		else
 			return null;
 	}
-	
-	public String getJogadorVezCor() {
-		return Jogador.getCorJogador(jogo.jogadorRodada);
-	}
 	public Double getJogadorVezSaldo() {
 		return jogo.jogadores[jogo.jogadorRodada].getSaldo();
 	}
 		
 	public void registraObserver(ObservadorJogo obj) {
-		System.out.println("registrando facade");
 		if(isJogoIniciado())
 			jogo.register(obj);
 	}
 	
+	public void clickouCasa (int numeroCasa) {
+		jogo.acaoCasa(numeroCasa);
+	}
+
 	
 	
 }
