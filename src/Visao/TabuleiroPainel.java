@@ -314,6 +314,64 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 			else if (yPos < 691)
 				numeroCasa = 0;
 			}
+		else if(yPos < 89 && yPos > 6) {
+			if(xPos < 154)
+			numeroCasa=10;
+			else if(xPos < 220)
+			numeroCasa=11;
+			else if(xPos < 284)
+			numeroCasa=12;
+			else if(xPos < 348)
+			numeroCasa=13;
+			else if(xPos < 412)
+			numeroCasa=14;
+			else if(xPos < 476)
+			numeroCasa=15;
+			else if(xPos < 540)
+			numeroCasa=16;
+			else if(xPos < 604)
+			numeroCasa=17;
+			else if(xPos < 693)
+			numeroCasa=18;
+			}
+		else if(xPos > 609 && xPos < 693) {
+			if( yPos < 155)
+			numeroCasa= 19;
+			else if(yPos < 220)
+			numeroCasa=20;
+			else if(yPos < 285)
+			numeroCasa=21;
+			else if(yPos < 350)
+			numeroCasa=22;
+			else if(yPos < 415)
+			numeroCasa=23;
+			else if(yPos < 482)
+			numeroCasa=24;
+			else if(yPos < 544)
+			numeroCasa=25;
+			else if(yPos < 610)
+			numeroCasa=26;
+			else if(yPos < 693)
+			numeroCasa=27;
+		}
+		else if(yPos > 609 && yPos < 690) {
+			if(xPos < 156)
+			numeroCasa=35;
+			else if(xPos < 222)
+			numeroCasa=34;
+			else if(xPos < 286)
+			numeroCasa=33;
+			else if(xPos < 350)
+			numeroCasa=32;
+			else if(xPos < 414)
+			numeroCasa=31;
+			else if(xPos < 478)
+			numeroCasa=30;
+			else if(xPos < 543)
+			numeroCasa=29;
+			else if(xPos < 608)
+			numeroCasa=28;			
+		}
 	
 		
 		if (numeroCasa != -1) {
