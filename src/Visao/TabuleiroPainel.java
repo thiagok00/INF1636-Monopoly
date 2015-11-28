@@ -162,7 +162,7 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 			pos = new Ponto(segColunaX,posY[posCasa-19]);
 		}
 		else if (posCasa < 36) {
-			int posX[] = {550,485,420,290,255,160,95};
+			int posX[] = {550,485,420,355,290,225,160,95};
 			pos = new Ponto(posX[posCasa-28],segLinhaY);
 		}
 		else 
