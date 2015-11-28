@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class MenuPainel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton dado,inicio,venda,construir,passe,hipotecas;
+	private JButton dado,inicio,passe,dadoViciado,carregaJogo;
 	JogoFrame frame;
 	
 	public MenuPainel () {
@@ -24,32 +24,23 @@ public class MenuPainel extends JPanel implements ActionListener{
 		inicio = new JButton("Iniciar Jogo");
 		inicio.addActionListener(this);
 		
-		construir = new JButton("Construir");
-		construir.addActionListener(this);
-		
-		
-		venda = new JButton("Vender");
-		venda.addActionListener(this);
-		
-		hipotecas = new JButton("Hipotecas");
-		venda.addActionListener(this);
-		
 		passe = new JButton("Passar Vez");
-		passe.addActionListener(this);
-		
-		
-		
+		passe.addActionListener(this);		
 		passe.setEnabled(false);
-	    construir.setEnabled(false);
-	    venda.setEnabled(false);
-		hipotecas.setEnabled(false);
-	    
+		
+		dadoViciado = new JButton("Dado Viciado");
+		dadoViciado.addActionListener(this);		
+		//dadoViciado.setEnabled(false);
+
+		carregaJogo = new JButton("Carrega Jogo");
+		carregaJogo.addActionListener(this);		
+		
+		
 		add(inicio);
 		add(dado);
-		add(construir);
-		add(venda);
-		add(hipotecas);
 		add(passe);
+		add(dadoViciado);
+		add(carregaJogo);
 	 
 
 	}
@@ -67,10 +58,8 @@ public class MenuPainel extends JPanel implements ActionListener{
 		    }    
 		   
 		    dado.setEnabled(true);
+		    dadoViciado.setEnabled(true);
 		    passe.setEnabled(false);
-		    construir.setEnabled(false);
-		    venda.setEnabled(false);
-		    hipotecas.setEnabled(false);
 		    jogo.iniciarJogo(input,frame.controladorEventos,frame.tabuleiro);
 			  
 		}
@@ -78,36 +67,51 @@ public class MenuPainel extends JPanel implements ActionListener{
 			
 			if (!jogo.rolarDado(0,0)) {
 				dado.setEnabled(false);
+				dadoViciado.setEnabled(false);
 			    passe.setEnabled(true);
-			    construir.setEnabled(true);
-			    venda.setEnabled(true);
-			    hipotecas.setEnabled(true);
 			}
 			else if (!jogo.isJogoIniciado()) {
 				frame.tabuleiro.update();
 			}
 		}
-		else if(arg0.getSource() == construir) {
-			
-		}
-		else if(arg0.getSource() == venda) {
-			
-			//IMPLEMENTAR A OPÇAO DE VENDA DE TERRENO/NEGOCIO
-			
-		}
-		else if (arg0.getSource() == hipotecas){
-			
-		}
 		else if(arg0.getSource() == passe) {
-			
 			if (BancoImobiliarioFacade.getIstance().PassarRodada()) {
 				dado.setEnabled(true);
+				dadoViciado.setEnabled(true);
 				passe.setEnabled(false);
-				construir.setEnabled(false);
-				venda.setEnabled(false);
-				hipotecas.setEnabled(false);
 			}
 		}
+		else if(arg0.getSource() == dadoViciado) {
+			
+			int n1 = -1;
+			int n2 = -1;
+			String fNumber = JOptionPane.showInputDialog("Valor do primeiro dado");	             
+			if (fNumber != null)
+				n1 = Integer.parseInt( fNumber );
+
+		
+			String fNumber2 = JOptionPane.showInputDialog("Valor do segundo dado");	  
+			if (fNumber2 != null)
+				n2 = Integer.parseInt( fNumber2 );
+			
+			if (n1 < 1 || n1 > 6 || n2 < 1 || n2 > 6)
+				 return;
+			 
+			if (!jogo.rolarDado(n1,n2)) {
+				dado.setEnabled(false);
+				dadoViciado.setEnabled(false);
+			    passe.setEnabled(true);
+			}
+			else if (!jogo.isJogoIniciado()) {
+				frame.tabuleiro.update();
+			}
+		}
+		else if (arg0.getSource() == carregaJogo) {
+			//TODO CARREGAR
+			
+			
+		}
 	}
+	
 	
 }//End of Class

@@ -71,7 +71,7 @@ class BancoImobiliario implements ObservadoJogo {
 				}
 			
 			}
-			else if(dado.getDado1() == dado.getDado2() && this.numeroRepeticoes == 3) {
+			else if(dado.getDado1() == dado.getDado2() && this.numeroRepeticoes == 2) {
 				prenderJogador(jogadorVez);	
 				this.estadoAtual = EstadosJogo.PosDado;
 				return false;
@@ -176,7 +176,10 @@ class BancoImobiliario implements ObservadoJogo {
 							int resp = controlador.oferecerConstruirOuVender();
 							if(resp == 0)  {
 								//construir TODO: VERIFICAR QUANTIDADE DE SEDES DE TODAS AS OUTRAS PROP
-								prop.construirSede();
+								if (prop.getQtdSedes() < 4)
+									prop.construirSede();
+								else 
+									prop.construirComite();
 							}
 							else if (resp == 1) {
 								//hipotecar

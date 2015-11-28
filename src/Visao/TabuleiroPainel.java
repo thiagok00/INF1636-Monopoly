@@ -287,9 +287,7 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 		int xPos = arg0.getX();
 		int yPos = arg0.getY();
 		BancoImobiliarioFacade jogo = BancoImobiliarioFacade.getIstance();
-		int numeroCasa = -1;
-		System.out.println(xPos+" ,"+yPos);
-		
+		int numeroCasa = -1;		
 		
 		if (xPos > 5 && xPos < 90) {
 		
