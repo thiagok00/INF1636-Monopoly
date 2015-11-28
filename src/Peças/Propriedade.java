@@ -41,6 +41,12 @@ public class Propriedade extends Terreno {
 	public int getQtdSedes() {
 		return qtdSedes;
 	}
+	public void setQtdSedes(int qtdSedes) {
+		this.qtdSedes=qtdSedes;
+	}
+	public void setComite(boolean Comite){
+		temComite=Comite;
+	}
 	
 	public Boolean construirSede() {
 		if (dono != null && !dono.isPreso) {

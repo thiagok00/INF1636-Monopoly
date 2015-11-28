@@ -28,6 +28,10 @@ public class Jogador {
 		return this.saldo;
 	}
 	
+	public void setSaldo(double preco) {
+		this.saldo=preco;
+	}
+	
 	public Boolean debita(double valor) {
 		if(valor > saldo)
 			return false;
