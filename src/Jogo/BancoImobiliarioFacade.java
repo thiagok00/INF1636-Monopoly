@@ -71,6 +71,10 @@ public class BancoImobiliarioFacade {
 			jogo.acaoCasa(numeroCasa);
 	}
 
-	
+	public void iniciarJogoArq(ControladorEventos controlador, ObservadorJogo obj) {
+		this.jogo = new BancoImobiliario(controlador);
+		jogo.register(obj);
+		Arquivo.lerArquivo(jogo);
+	}
 	
 }

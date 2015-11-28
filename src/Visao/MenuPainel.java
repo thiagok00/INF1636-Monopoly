@@ -107,6 +107,8 @@ public class MenuPainel extends JPanel implements ActionListener{
 			}
 		}
 		else if (arg0.getSource() == carregaJogo) {
+			jogo.iniciarJogoArq(frame.controladorEventos,frame.tabuleiro);
+			
 			//TODO CARREGAR
 			
 			

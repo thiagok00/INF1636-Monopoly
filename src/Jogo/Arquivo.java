@@ -7,19 +7,26 @@ import Peças.*;
 
 public class Arquivo {
 
-	public void leituraArquivo(BancoImobiliario jogo) throws IOException
+	static public void lerArquivo(BancoImobiliario jogo)
 	{
 		
 		int qtdJogadores,numProp,qtdSede,dono,casaAtual = 0,i;
 		double saldo;
 		boolean isPreso=false,Comite=false;
-		Scanner in = new Scanner(new File("entrada.txt"));
+		Scanner in = null; 
+		try {
+			in = new Scanner(new File("casoCadeia.txt"));
+		}
+		catch(IOException e){
+			return;
+		}
 		qtdJogadores=in.nextInt();
+		jogo.iniciarJogo(qtdJogadores);
 		for(i=0; i<qtdJogadores ; i++) {
 			
 			saldo=in.nextDouble();
 			jogo.jogadores[i].setSaldo(saldo);
-			numProp=in.nextInt();
+			casaAtual=in.nextInt();
 			jogo.jogadores[i].casaAtual=casaAtual;
 			isPreso=in.nextBoolean();
 			jogo.jogadores[i].isPreso = isPreso;
@@ -44,5 +51,8 @@ public class Arquivo {
 			System.out.println("LIDO DO ARQUIVO NAO EH PROPRIEDADE!!");
 		}
 		}
+	in.close();
+	jogo.notificarObservadores();
 	}
+	
 }//EOC
