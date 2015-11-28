@@ -67,7 +67,8 @@ public class BancoImobiliarioFacade {
 	}
 	
 	public void clickouCasa (int numeroCasa) {
-		jogo.acaoCasa(numeroCasa);
+		if(isJogoIniciado())
+			jogo.acaoCasa(numeroCasa);
 	}
 
 	

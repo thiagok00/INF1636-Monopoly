@@ -83,7 +83,7 @@ class BancoImobiliario implements ObservadoJogo {
 				jogadorVez.credita(200);
 
 				String titulo = "Pagamento de Pró-Labore";
-				String msg = "Você recebeu R$200!";//Popup avisando que recebeu 200
+				String msg = "Você recebeu R$200!";
 				this.notificarMensagens(msg, titulo);
 				novaCasa = (novaCasa)%36;
 			}
@@ -138,7 +138,15 @@ class BancoImobiliario implements ObservadoJogo {
 			if (casa instanceof Companhia) {
 				Companhia comp = (Companhia) casa;
 				if (dono == jogadorVez) {
-					System.out.println("//oferecer hipotecar");
+					if(comp.isHipotecado) {
+						if(controlador.oferecerRecuperarHipoteca(comp.nome, comp.getPagamentoHipoteca())) 
+							comp.pagarHipoteca();
+					}	
+					else {
+						if(controlador.oferecerHipoteca(comp.nome, comp.getValorHipoteca())) 
+							comp.hipotecar();
+					}
+					
 				}
 				else if (dono != null){
 					System.out.println("//fazer oferta companhia");
@@ -148,10 +156,33 @@ class BancoImobiliario implements ObservadoJogo {
 				Propriedade prop = (Propriedade) casa;
 				if (dono == jogadorVez) {
 					if (prop.isHipotecado) {
-						System.out.println("//pagar hipoteca");
+						if(controlador.oferecerRecuperarHipoteca(prop.nome, prop.getPagamentoHipoteca()))
+							prop.pagarHipoteca();
 					}
 					else {
-						System.out.println("//construir algo");
+						if(prop.getQtdSedes() == 0){
+							int resp = controlador.oferecerConstruirOuHipotecar();
+							if(resp == 0)  {
+								//construir TODO: VERIFICAR QUANTIDADE DE SEDES DE TODAS AS OUTRAS PROP
+								prop.construirSede();
+							}
+							else if (resp == 1) {
+								//hipotecar
+								prop.hipotecar();
+							}
+
+						}
+						else {
+							int resp = controlador.oferecerConstruirOuVender();
+							if(resp == 0)  {
+								//construir TODO: VERIFICAR QUANTIDADE DE SEDES DE TODAS AS OUTRAS PROP
+								prop.construirSede();
+							}
+							else if (resp == 1) {
+								//hipotecar
+								prop.venderConstrucao();
+							}
+						}
 					}
 				}
 				else if (dono != null) {
@@ -160,7 +191,7 @@ class BancoImobiliario implements ObservadoJogo {
 			}
 		}
 	
-		
+		this.notificarObservadores();
 		return false;
 	}
 	 
@@ -184,11 +215,13 @@ class BancoImobiliario implements ObservadoJogo {
 				}
 			}
 			else {
-				terreno.pagarTaxa(jogadorVez, this.dado);
-				String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
-				String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
-				this.notificarObservadores();
-				this.notificarMensagens(msg, "Pagamento de Aluguel");
+				if (!terreno.isHipotecado) {
+					terreno.pagarTaxa(jogadorVez, this.dado);
+					String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
+					String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
+					this.notificarObservadores();
+					this.notificarMensagens(msg, "Pagamento de Aluguel");
+				}
 				
 			}
 		}

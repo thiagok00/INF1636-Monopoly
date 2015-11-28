@@ -3,9 +3,8 @@ package Peças;
 public abstract class Terreno extends Casa {
 	
 	protected double valorCompra;
-	protected double hipoteca;
 	protected Jogador dono = null;	
-	private double valorHipoteca;
+	protected double valorHipoteca;
 	public Boolean isHipotecado = false;
 	
 	public double getValorCompra() {

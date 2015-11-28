@@ -12,17 +12,17 @@ public class Companhia extends Terreno {
 		
 		if(valorCompra <= 150) {
 			taxaAluguel = 40;
-			hipoteca = 75;
+			valorHipoteca = 75;
 		}
 		else {
 			taxaAluguel = 50;
-			hipoteca = 100;
+			valorHipoteca = 100;
 		}
 	}
 
 	@Override
 	public Boolean pagarTaxa(Jogador pagador, Dados dado) {
-		if(dono != null) {
+		if(dono != null && !isHipotecado) {
 			double valorPagar = taxaAluguel*dado.getSoma();	
 			if(pagador.debita(valorPagar)) {
 				dono.credita(valorPagar);
