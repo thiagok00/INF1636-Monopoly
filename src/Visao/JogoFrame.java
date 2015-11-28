@@ -1,15 +1,12 @@
 package Visao;
-import java.awt.Image;
-
 import javax.swing.*;
 import Jogo.*;
 
 public class JogoFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	public final int WIDTH_DEFAULT = 800;
+	public final int WIDTH_DEFAULT = 850;
 	public final int HEIGHT_DEFAULT =720;
-
 	
 	TabuleiroPainel tabuleiro;
 	MenuPainel menu;

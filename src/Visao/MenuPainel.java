@@ -15,7 +15,7 @@ public class MenuPainel extends JPanel implements ActionListener{
 	public MenuPainel () {
 		super();	
 		
-		this.setBounds(700, 0, 100, 700);
+		this.setBounds(700, 0, 150, 700);
 		setLayout(new GridLayout(0,1));
 		
 		dado = new JButton("Rolar dado");
