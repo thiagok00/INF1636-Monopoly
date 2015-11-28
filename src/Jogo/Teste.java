@@ -5,9 +5,9 @@ import java.util.*;
 
 import Peças.*;
 
-public class Arquivo {
+public class Teste {
 
-	static public void lerArquivo(BancoImobiliario jogo)
+	static public void iniciarComArquivo(BancoImobiliario jogo,String nomeArq)
 	{
 		
 		int qtdJogadores,numProp,qtdSede,dono,casaAtual = 0,i;
@@ -15,10 +15,11 @@ public class Arquivo {
 		boolean isPreso=false,Comite=false;
 		Scanner in = null; 
 		try {
-			in = new Scanner(new File("casoCadeia.txt"));
+			in = new Scanner(new File(nomeArq));
 		}
 		catch(IOException e){
-			return;
+			System.out.println(nomeArq+"/"+e.getMessage());
+			System.exit(1);
 		}
 		qtdJogadores=in.nextInt();
 		jogo.iniciarJogo(qtdJogadores);

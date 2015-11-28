@@ -57,6 +57,22 @@ public class BancoImobiliarioFacade {
 		else
 			return null;
 	}
+	
+	public Propriedade[] getPropriedades() {
+		
+		if (isJogoIniciado()) {
+			Propriedade vet[] = new Propriedade[18];
+			int i = 0;
+			for(Casa casa : jogo.casas){
+				if(casa instanceof Propriedade)
+					vet[i++]=(Propriedade)casa;
+			}
+			return vet;
+		}
+		return null;
+	}
+	
+	
 	public Double getJogadorVezSaldo() {
 		return jogo.jogadores[jogo.jogadorRodada].getSaldo();
 	}
@@ -71,10 +87,12 @@ public class BancoImobiliarioFacade {
 			jogo.acaoCasa(numeroCasa);
 	}
 
-	public void iniciarJogoArq(ControladorEventos controlador, ObservadorJogo obj) {
+	public void iniciarJogoArq(ControladorEventos controlador, ObservadorJogo obj,String nomeArq) {
 		this.jogo = new BancoImobiliario(controlador);
 		jogo.register(obj);
-		Arquivo.lerArquivo(jogo);
+		Teste.iniciarComArquivo(jogo, nomeArq);
 	}
+	
+	
 	
 }

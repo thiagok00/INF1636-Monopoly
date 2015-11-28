@@ -68,11 +68,22 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 		if (jogo.isJogoIniciado()) {
 			
 			this.updateJogadorLabel(jogo.getJogadorRodada());
+			
 			Jogador jogadores[] = jogo.getJogadores();
 			for (Jogador jogador : jogadores) {
 				Ponto pos = this.getPosicaoJogador(jogador);
 				g.drawImage(getImagemPino(jogador), pos.x, pos.y, 16, 25, null);
-			}	
+			}
+			
+			Propriedade propriedades[] = jogo.getPropriedades();
+			for (Propriedade prop : propriedades) {
+				Image  propImg = getPropImagem(prop);
+				if (propImg != null) {
+					Ponto p = getPropImgPos(prop);
+					g.drawImage(propImg, p.x, p.y, 25, 25, null);		
+				}
+			}
+			
 		}
 		
 		int dado1 = jogo.dado.getDado1();
@@ -101,7 +112,6 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 	
 	Image getImagemPino(Jogador jogador) {
 		
-		//"pinos/red_pin.png","pinos/blue_pin.png","pinos/orange_pin.png","pinos/yellow_pin.png","pinos/purple_pin.png","pinos/black_pin.png"};
 		String imgPath;
 		switch(jogador.getNumPino()) {
 		case 0:
@@ -114,16 +124,16 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 			imgPath = "Pinos/orange_pin.png";
 			break;
 		case 3:
-			imgPath = "Pinos/purple_pin.png";
+			imgPath = "Pinos/yellow_pin.png";
 			break;
 		case 4:
-			imgPath = "Pinos/red_pin.png";
+			imgPath = "Pinos/purple_pin.png";
 			break;
 		case 5:
-			imgPath = "Pinos/yellow_pin.png";
+			imgPath = "Pinos/black_pin.png";
 			break;
 		default:
-			imgPath = "Pinos/yellow_pin.png";
+			imgPath = "Pinos/black_pin.png";
 			break;
 		}
 		Image img=null;
@@ -177,6 +187,78 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 		
 		return pos;
 	}	
+	
+	
+	private Image getPropImagem(Propriedade prop) {
+		
+		Image img = null;
+		if (prop.getDono() != null) {
+			String imgPath = "Construcoes/";
+			String strCor = Jogador.getJogadorCor(prop.getDono());
+			int qtdSedes = prop.getQtdSedes();
+		
+			if (prop.temComite)
+				imgPath = imgPath+strCor+" Comite";
+			else
+				imgPath = imgPath+strCor+"Casa "+qtdSedes;
+			
+			imgPath = imgPath+".png";
+			try {
+				img=ImageIO.read(new File(imgPath));;
+			}	
+			catch(IOException e) {
+				System.out.println(imgPath+"/"+e.getMessage());
+				System.exit(1);	
+			}	
+		}		
+		return img;
+	}
+	
+	private Ponto getPropImgPos(Propriedade prop) {
+		
+		Ponto pto = new Ponto(100,100);
+		int numCasa = prop.numeroCasa;
+		
+		if (numCasa == 1)
+			return new Ponto(34,563);
+		if (numCasa == 4)
+			return new Ponto(34,370);
+		if (numCasa == 5)
+			return new Ponto(34,300);
+		if (numCasa == 8)
+			return new Ponto(34,105);
+		if (numCasa == 10)
+			return new Ponto(106,35);
+		if (numCasa == 11)
+			return new Ponto(175,35);		
+		if (numCasa == 12)
+			return new Ponto(238,35);
+		if (numCasa == 14)
+			return new Ponto(368,35);
+		if (numCasa == 16)
+			return new Ponto(496,35);
+		if (numCasa == 20)
+			return new Ponto(640,176);
+		if (numCasa == 21)
+			return new Ponto(640,238);
+		if (numCasa == 22)
+			return new Ponto(640,300);
+		if (numCasa == 25)
+			return new Ponto(640,500);
+		if (numCasa == 26)
+			return new Ponto(640,563);
+		if (numCasa == 28)
+			return new Ponto(563,638);
+		if (numCasa == 30)
+			return new Ponto(434,638);
+		if (numCasa == 32)
+			return new Ponto(306,638);
+		if (numCasa == 35)
+			return new Ponto(108,638);		
+		return pto;
+	}
+	
+	
 	
 	/*
 	 * Metodos ObservadorJogo
@@ -372,6 +454,7 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 		}
 	
 		if (numeroCasa != -1) {
+			System.out.println(xPos+" "+yPos+" casa: "+numeroCasa);
 			jogo.clickouCasa(numeroCasa);	
 		}	
 	}

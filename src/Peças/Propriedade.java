@@ -16,7 +16,7 @@ public class Propriedade extends Terreno {
 	
 	
 	private int qtdSedes = 0;
-	private Boolean temComite = false;
+	public Boolean temComite = false;
 	//Preço compra/valorsede/valorcomite
 	public final double precoComite;
 	public final double precoSede;

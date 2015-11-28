@@ -85,16 +85,19 @@ public class MenuPainel extends JPanel implements ActionListener{
 			
 			int n1 = -1;
 			int n2 = -1;
-			String fNumber = JOptionPane.showInputDialog("Valor do primeiro dado");	             
+			String fNumber = JOptionPane.showInputDialog(this.getParent(),"Valor do primeiro dado");	             
 			if (fNumber != null)
 				n1 = Integer.parseInt( fNumber );
-
+			
+			if (n1 < 1 || n1 > 6)
+				 return;
+			
 		
-			String fNumber2 = JOptionPane.showInputDialog("Valor do segundo dado");	  
+			String fNumber2 = JOptionPane.showInputDialog(this.getParent(),"Valor do segundo dado");	  
 			if (fNumber2 != null)
 				n2 = Integer.parseInt( fNumber2 );
 			
-			if (n1 < 1 || n1 > 6 || n2 < 1 || n2 > 6)
+			if (n2 < 1 || n2 > 6)
 				 return;
 			 
 			if (!jogo.rolarDado(n1,n2)) {
@@ -107,9 +110,19 @@ public class MenuPainel extends JPanel implements ActionListener{
 			}
 		}
 		else if (arg0.getSource() == carregaJogo) {
-			jogo.iniciarJogoArq(frame.controladorEventos,frame.tabuleiro);
 			
-			//TODO CARREGAR
+			String[] choices = { "casoCadeia.txt","posicoesConstrucoes.txt","temp.txt"};
+		    String input = (String) JOptionPane.showInputDialog(this.getParent(), "Qual arquivo?",
+		            "Iniciar Jogo", JOptionPane.QUESTION_MESSAGE, null,choices,choices[0]);
+		    if (input == null){
+		    	return;
+		    }  
+		    else {
+		    	String nomeArq = "ArquivosTeste/"+input;
+		    	System.out.println("NOMEARQ: "+nomeArq);
+		    	jogo.iniciarJogoArq(frame.controladorEventos,frame.tabuleiro,nomeArq);
+		    }
+		
 			
 			
 		}

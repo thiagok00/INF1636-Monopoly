@@ -1,0 +1,21 @@
+2
+2123 10 false
+200 25 false
+1 4 false 0
+4 4 false 0
+5 4 false 0
+8 4 false 0
+10 4 false 0
+11 4 false 0
+12 4 false 0
+14 4 false 0 
+16 4 false 0
+20 4 false 0
+21 4 false 0
+22 4 false 0
+25 4 false 0
+26 4 false 0
+28 4 false 0
+30 4 false 0
+32 4 false 0
+35 4 false 0
