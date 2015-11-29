@@ -1,7 +1,10 @@
 package Jogo;
 import Peças.*;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Queue;
 
 enum EstadosJogo {
@@ -113,6 +116,13 @@ class BancoImobiliario implements ObservadoJogo {
 		 else
 			 jogadorRodada++;
 		 
+		 while(jogadores[jogadorRodada].isFalido){
+			 if(jogadorRodada==(qtdJogadoresTotal-1))
+				 jogadorRodada=0;
+			 else
+				 jogadorRodada++;	 
+		 }
+		 		 		 
 		 this.estadoAtual = EstadosJogo.PreDado;
 		 this.numeroRepeticoes = 0;
 		 this.notificarObservadores();
@@ -214,11 +224,19 @@ class BancoImobiliario implements ObservadoJogo {
 			}
 			else {
 				if (!terreno.isHipotecado && jogadorVez != terreno.getDono()) {
+					
+					if(terreno.getTaxa() > jogadorVez.getSaldo()){
+						if (this.venderBensJogador(jogadorVez, terreno.getTaxa()) == false){
+							this.falirJogador(jogadorVez,terreno.getDono(),terreno.getTaxa());
+							return;
+						}
+							
+				
 					terreno.pagarTaxa(jogadorVez, this.dado);
 					String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
 					String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
 					this.notificarObservadores();
-					this.notificarMensagens(msg, "Pagamento de Aluguel");
+					this.notificarMensagens(msg, "Pagamento de Aluguel");}
 				}
 				
 			}
@@ -262,6 +280,77 @@ class BancoImobiliario implements ObservadoJogo {
 		this.notificarObservadores();
 	}
 
+	private boolean venderBensJogador(Jogador devedor, double divida) {
+		
+		
+		while (divida > devedor.getSaldo()) {
+			
+			int resp = controlador.desfazerBens(devedor,divida);
+			if (resp >= 0 && resp < 36) { 
+				Terreno trn = (Terreno) casas[resp];
+				
+				if (trn instanceof Propriedade) {
+					Propriedade p = (Propriedade) trn;
+					System.out.println(p.getQtdSedes());
+					if (p.getQtdSedes() > 0) {
+						System.out.println(p.getQtdSedes());
+						p.venderConstrucao();
+						}
+					else
+						p.hipotecar();
+				}
+				else
+					trn.hipotecar();
+			}
+			
+			if (resp == -10) {
+				//FALIU
+				return false;
+			}
+			
+			this.notificarObservadores();
+		}
+		
+		return true;
+	}
+	
+	private void falirJogador(Jogador devedor, Jogador credor, double divida) {
+		
+		double dinheiro = devedor.getSaldo();
+	
+		ListIterator<Terreno> listIterator = devedor.lstTerrenos.listIterator();
+		while (listIterator.hasNext()) { 
+			Terreno terreno = listIterator.next();
+			dinheiro += terreno.devolverBanco();
+		}
+		double pagamento;
+		
+		if (dinheiro >= divida)
+			pagamento = divida;
+		else
+			pagamento = dinheiro;
+		
+		devedor.credita(pagamento);
+		
+		devedor.lstTerrenos = null;
+		devedor.isFalido = true;
+		String corCredor = Jogador.getJogadorCor(credor);
+		
+		int qtdNaoFalidos = 0;
+		for(Jogador jogador : jogadores){
+			if(!jogador.isFalido){
+				qtdNaoFalidos++;
+			}		
+		}
+		
+		if(qtdNaoFalidos == 1) {
+			this.notificarMensagens("Você faliu. O jogador "+corCredor+" é o grande milionário.", "Game Over.");
+		}
+		else {
+			this.notificarMensagens("Você faliu. O jogador "+corCredor+" recebeu R$"+pagamento+".", "Falência.");
+		}
+	}
+	
 			
 	
 /*	

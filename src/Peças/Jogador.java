@@ -13,6 +13,7 @@ public class Jogador {
 	
 	
 	public int passesPrisao = 0;
+	public Boolean isFalido = false;
 	public Boolean isPreso = false;
 	public int rodadasPreso=0;
 	

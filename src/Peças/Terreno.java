@@ -64,6 +64,12 @@ public abstract class Terreno extends Casa {
 		return this.valorHipoteca;
 	}
 
+	public double devolverBanco() {
+		this.dono = null;
+		this.isHipotecado = false;
+		
+		return this.valorCompra;
+	}
 	
 	public abstract Boolean pagarTaxa(Jogador pagador, Dados dado);
 	public abstract Double getTaxa();

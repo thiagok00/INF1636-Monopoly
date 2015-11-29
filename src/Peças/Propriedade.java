@@ -21,7 +21,6 @@ public class Propriedade extends Terreno {
 	//Preço compra/valorsede/valorcomite
 	public final double precoComite;
 	public final double precoSede;
-	
 	private final double vetorTaxas[]; 
 	final Cores cor;
 	
@@ -31,6 +30,7 @@ public class Propriedade extends Terreno {
 		this.precoSede = precoSede;
 		this.vetorTaxas = vetorPrecos; 
 		this.cor = cor;
+		this.valorHipoteca = preco;
 	}
 
 
@@ -128,7 +128,14 @@ public class Propriedade extends Terreno {
 	}
 	
 	
-	
+	@Override
+	public double devolverBanco() {
+		this.dono = null;
+		this.isHipotecado = false;
+		this.qtdSedes = 0;
+		this.temComite = false;		
+		return this.valorCompra;
+	}
 	
 	@Override
 	public Boolean pagarTaxa(Jogador pagador, Dados dado) {

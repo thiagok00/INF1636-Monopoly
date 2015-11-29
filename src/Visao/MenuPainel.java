@@ -111,7 +111,7 @@ public class MenuPainel extends JPanel implements ActionListener{
 		}
 		else if (arg0.getSource() == carregaJogo) {
 			
-			String[] choices = { "casoCadeia.txt","posicoesConstrucoes.txt","temp.txt"};
+			String[] choices = { "casoCadeia.txt","posicoesConstrucoes.txt","casoFalencia.txt","temp.txt"};
 		    String input = (String) JOptionPane.showInputDialog(this.getParent(), "Qual arquivo?",
 		            "Iniciar Jogo", JOptionPane.QUESTION_MESSAGE, null,choices,choices[0]);
 		    if (input == null){
