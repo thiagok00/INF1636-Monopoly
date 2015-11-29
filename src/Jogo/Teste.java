@@ -31,6 +31,7 @@ public class Teste {
 			jogo.jogadores[i].casaAtual=casaAtual;
 			isPreso=in.nextBoolean();
 			jogo.jogadores[i].isPreso = isPreso;
+			jogo.jogadores[i].passesPrisao = in.nextInt();
 		}
 		
 		while(in.hasNext()) {

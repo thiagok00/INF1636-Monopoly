@@ -112,7 +112,7 @@ public class Propriedade extends Terreno {
 				if ( terreno instanceof Propriedade) {	
 					Propriedade propriedade = (Propriedade) terreno;
 					if (propriedade.cor == this.cor) {
-						if (propriedade.getQtdSedes() < this.getQtdSedes()) {
+						if (propriedade.getQtdSedes() < this.getQtdSedes() || propriedade.isHipotecado) {
 							return false;		
 						}
 					qtdCor++;		

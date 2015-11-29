@@ -1,7 +1,6 @@
 package Jogo;
 import Peças.*;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -186,7 +185,7 @@ class BancoImobiliario implements ObservadoJogo {
 					
 				}
 				else if (dono != null){
-					System.out.println("//fazer oferta companhia");
+					//fazer oferta para comprar companhia de outro jogador
 				}
 			}
 			else if (casa instanceof Propriedade) {
@@ -222,7 +221,7 @@ class BancoImobiliario implements ObservadoJogo {
 					}
 				}
 				else if (dono != null) {
-					System.out.println("//fazer uma oferta");
+					//fazer oferta para comprar propriedade de outro jogador
 				}
 			}
 		}
@@ -333,9 +332,8 @@ class BancoImobiliario implements ObservadoJogo {
 				
 				if (trn instanceof Propriedade) {
 					Propriedade p = (Propriedade) trn;
-					System.out.println(p.getQtdSedes());
+					
 					if (p.getQtdSedes() > 0) {
-						System.out.println(p.getQtdSedes());
 						p.venderConstrucao();
 						}
 					else
