@@ -2,7 +2,7 @@ package Peças;
 
 public class Noticia extends Casa {
 
-	final double valor;
+	public final double valor;
 	Noticia(int numeroCasa, int valor) {
 		super(numeroCasa);
 		this.valor = valor;

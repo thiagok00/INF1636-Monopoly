@@ -153,7 +153,7 @@ public class Propriedade extends Terreno {
 		return false;
 	}
 	@Override
-	public Double getTaxa() {
+	public Double getTaxa(Dados dado) {
 		if(this.temComite)
 			return vetorTaxas[5]*1.0;
 		else

@@ -32,8 +32,8 @@ public class Companhia extends Terreno {
 	}
 
 	@Override
-	public Double getTaxa() {
-		return this.taxaAluguel*1.0;
+	public Double getTaxa(Dados dado) {
+		return this.taxaAluguel*dado.getSoma();
 	}
 
 	

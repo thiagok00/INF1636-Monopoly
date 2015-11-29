@@ -72,6 +72,6 @@ public abstract class Terreno extends Casa {
 	}
 	
 	public abstract Boolean pagarTaxa(Jogador pagador, Dados dado);
-	public abstract Double getTaxa();
+	public abstract Double getTaxa(Dados dado);
 
 }//End of Class

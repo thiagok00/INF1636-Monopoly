@@ -111,7 +111,6 @@ class BancoImobiliario implements ObservadoJogo {
 				return true;
 			}
 			
-			
 			if (dado.getDado1() == dado.getDado2() && !jogadorVez.isPreso) {
 				this.numeroRepeticoes++;
 				this.estadoAtual = EstadosJogo.PreDado;
@@ -154,7 +153,6 @@ class BancoImobiliario implements ObservadoJogo {
 			 } 
 		 }
 					 
-		 
 		 this.estadoAtual = EstadosJogo.PreDado;
 		 this.numeroRepeticoes = 0;
 		 this.notificarObservadores();
@@ -255,15 +253,15 @@ class BancoImobiliario implements ObservadoJogo {
 			else {
 				if (!terreno.isHipotecado && jogadorVez != terreno.getDono()) {
 					
-					if(terreno.getTaxa() > jogadorVez.getSaldo()){
-						if (this.venderBensJogador(jogadorVez, terreno.getTaxa()) == false){
-							this.falirJogador(jogadorVez,terreno.getDono(),terreno.getTaxa());
+					if(terreno.getTaxa(dado) > jogadorVez.getSaldo()){
+						if (this.venderBensJogador(jogadorVez, terreno.getTaxa(dado)) == false){
+							this.falirJogador(jogadorVez,terreno.getDono(),terreno.getTaxa(dado));
 							return;
 						}
 					}
 					terreno.pagarTaxa(jogadorVez, this.dado);
 					String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
-					String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
+					String msg = "Você pagou R$"+terreno.getTaxa(dado)+" para o Jogador "+donoString;
 					this.notificarObservadores();
 					this.notificarMensagens(msg, "Pagamento de Aluguel");
 				}
@@ -272,6 +270,14 @@ class BancoImobiliario implements ObservadoJogo {
 		}
 		else if (casaAtual instanceof Noticia) {
 			Noticia noticia = (Noticia) casaAtual;		
+			
+			if (noticia.valor*-1 > jogadorVez.getSaldo()){
+				if (this.venderBensJogador(jogadorVez, noticia.valor*-1) == false){
+					this.falirJogador(jogadorVez,null,noticia.valor*-1);
+					return;
+				}
+			}
+			
 			noticia.fazerAcao(jogadorVez);
 			this.notificarObservadores();
 			this.notificarMensagens(noticia.getMensagem(), "Atenção");
