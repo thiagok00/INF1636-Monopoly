@@ -16,5 +16,7 @@ public interface ControladorEventos {
 	public int oferecerConstruirOuVender();
 	
 	public int desfazerBens(Jogador jogador,double divida);
+	
+	public boolean oferecerUsarPassePrisao();
 
 }

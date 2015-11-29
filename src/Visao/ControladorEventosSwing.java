@@ -124,6 +124,19 @@ public class ControladorEventosSwing implements ControladorEventos {
 	    return resp;
 	}
 
+	@Override
+	public boolean oferecerUsarPassePrisao() {
+		
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		String msg = "Deseja usar passe para sair da prisão?";
+		
+		int dialogResult =JOptionPane.showConfirmDialog (frame, msg,"Saida Prisão",dialogButton);
+		if(dialogResult == JOptionPane.YES_OPTION)
+			return true;
+		else 
+			return false;
+	}
+
 
 
 }//End of Class

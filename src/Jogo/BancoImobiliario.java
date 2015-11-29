@@ -122,7 +122,21 @@ class BancoImobiliario implements ObservadoJogo {
 			 else
 				 jogadorRodada++;	 
 		 }
-		 		 		 
+		 	
+		 Jogador nvJogador = jogadores[jogadorRodada];
+		
+		 if (nvJogador.isPreso){
+			 if (nvJogador.passesPrisao > 0){
+				 this.notificarObservadores();
+				 if(controlador.oferecerUsarPassePrisao()){
+					 nvJogador.isPreso = false;
+					 nvJogador.rodadasPreso = 0;
+					 nvJogador.passesPrisao--;
+				 }		 
+			 } 
+		 }
+					 
+		 
 		 this.estadoAtual = EstadosJogo.PreDado;
 		 this.numeroRepeticoes = 0;
 		 this.notificarObservadores();
