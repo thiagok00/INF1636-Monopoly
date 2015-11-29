@@ -1,5 +1,6 @@
 package Peças;
 
+import java.util.ListIterator;
 
 enum Cores {
 	Laranja,
@@ -50,6 +51,10 @@ public class Propriedade extends Terreno {
 	
 	public Boolean construirSede() {
 		if (dono != null && !dono.isPreso) {
+			
+			if (!checaSePodeConstruir())
+				return false;
+
 			if (qtdSedes<4) {
 				if(dono.debita(precoSede)){
 					qtdSedes++;
@@ -65,6 +70,10 @@ public class Propriedade extends Terreno {
 		if(temComite)
 			return false;
 		if (dono != null && !dono.isPreso) {
+			
+			if (!checaSePodeConstruir())
+				return false;
+			
 			if (qtdSedes==4) {
 				if(dono.debita(precoComite)){
 					temComite = true;
@@ -93,6 +102,34 @@ public class Propriedade extends Terreno {
 		}
 		return false;
 	}
+	
+	private boolean checaSePodeConstruir() {
+		
+		int qtdCor = 0;
+		ListIterator<Terreno> listIterator = dono.lstTerrenos.listIterator();
+		while (listIterator.hasNext()) { 
+			Terreno terreno = listIterator.next();
+				if ( terreno instanceof Propriedade) {	
+					Propriedade propriedade = (Propriedade) terreno;
+					if (propriedade.cor == this.cor) {
+						if (propriedade.getQtdSedes() < this.getQtdSedes()) {
+							return false;		
+						}
+					qtdCor++;		
+					}									
+				}		
+		}
+		
+		if (qtdCor < CASA_POR_COR ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	
+	
 	@Override
 	public Boolean pagarTaxa(Jogador pagador, Dados dado) {
 		if(dono != null) 

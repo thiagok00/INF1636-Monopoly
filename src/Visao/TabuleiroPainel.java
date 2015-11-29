@@ -454,7 +454,7 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 		}
 	
 		if (numeroCasa != -1) {
-			System.out.println(xPos+" "+yPos+" casa: "+numeroCasa);
+			//printar coord System.out.println(xPos+" "+yPos+" casa: "+numeroCasa);
 			jogo.clickouCasa(numeroCasa);	
 		}	
 	}

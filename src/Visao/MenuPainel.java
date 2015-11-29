@@ -119,7 +119,11 @@ public class MenuPainel extends JPanel implements ActionListener{
 		    }  
 		    else {
 		    	String nomeArq = "ArquivosTeste/"+input;
-		    	System.out.println("NOMEARQ: "+nomeArq);
+
+			    dado.setEnabled(true);
+			    dadoViciado.setEnabled(true);
+			    passe.setEnabled(false);
+			    
 		    	jogo.iniciarJogoArq(frame.controladorEventos,frame.tabuleiro,nomeArq);
 		    }
 		

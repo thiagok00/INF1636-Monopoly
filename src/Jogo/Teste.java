@@ -1,8 +1,8 @@
 package Jogo;
 
-import java.io.*;
-import java.util.*;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 import Peças.*;
 
 public class Teste {
@@ -34,26 +34,25 @@ public class Teste {
 		}
 		
 		while(in.hasNext()) {
-		numProp=in.nextInt();
-		qtdSede=in.nextInt();
-		Comite=in.nextBoolean();
-		dono=in.nextInt();
-		
-		if(jogo.casas[numProp] instanceof Propriedade)
-		{
-			Propriedade prop = (Propriedade)jogo.casas[numProp];
-			prop.setQtdSedes(qtdSede);
-			prop.setComite(Comite);
-			jogo.jogadores[dono].credita(prop.getValorCompra());
-			jogo.jogadores[dono].comprarTerreno(prop);
-		}
-		else
-		{	
-			System.out.println("LIDO DO ARQUIVO NAO EH PROPRIEDADE!!");
-		}
+			numProp=in.nextInt();
+			qtdSede=in.nextInt();
+			Comite=in.nextBoolean();
+			dono=in.nextInt();
+			
+			if(jogo.casas[numProp] instanceof Propriedade) {
+				Propriedade prop = (Propriedade)jogo.casas[numProp];
+				prop.setQtdSedes(qtdSede);
+				prop.setComite(Comite);
+				jogo.jogadores[dono].credita(prop.getValorCompra());
+				jogo.jogadores[dono].comprarTerreno(prop);
+			}
+			else {	
+				System.out.println("Arq com erro");
+				System.exit(1);	
+			}	
 		}
 	in.close();
 	jogo.notificarObservadores();
 	}
 	
-}//EOC
+}//End of Class

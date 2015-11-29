@@ -218,7 +218,7 @@ class BancoImobiliario implements ObservadoJogo {
 				}
 			}
 			else {
-				if (!terreno.isHipotecado) {
+				if (!terreno.isHipotecado && jogadorVez != terreno.getDono()) {
 					terreno.pagarTaxa(jogadorVez, this.dado);
 					String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
 					String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
