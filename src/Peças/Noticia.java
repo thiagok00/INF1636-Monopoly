@@ -20,12 +20,11 @@ public class Noticia extends Casa {
 	public String getMensagem() {
 		String msg;
 		if(valor>=0){
-			msg = "Você recebeu ";
+			msg = "Você recebeu "+ valor + ".";;
 		}
 		else {
-			msg = "Você perdeu ";
+			msg = "Você perdeu $"+ -valor + ".";;
 		}
-		msg = msg + "$" + valor + ".";
 		return msg;
 	}
 	
@@ -39,7 +38,7 @@ public class Noticia extends Casa {
 	}
 	private Boolean pague(Jogador jogador, double valor) {	
 		if (jogador != null){	
-			if(jogador.debita(valor));	
+			if(jogador.debita(-valor));	
 				return true;	
 		}
 		return false;
