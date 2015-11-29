@@ -15,6 +15,7 @@ public interface ControladorEventos {
 	/* Retorna 0 para Construir e 1 para Vender construção */
 	public int oferecerConstruirOuVender();
 	
+	/* Retorna numero da casa a ser feita ação, -1 caso não tenha selecionado nada e -10 caso não haja opções */
 	public int desfazerBens(Jogador jogador,double divida);
 	
 	public boolean oferecerUsarPassePrisao();

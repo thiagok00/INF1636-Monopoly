@@ -9,7 +9,8 @@ import java.util.Queue;
 
 enum EstadosJogo {
 		PreDado,
-		PosDado
+		PosDado,
+		JogoAcabou
 }
 class BancoImobiliario implements ObservadoJogo {
 
@@ -52,8 +53,12 @@ class BancoImobiliario implements ObservadoJogo {
 	}
 	
 	boolean andarJogadorAtual(Dados dado) {
+		
+		if(estadoAtual == EstadosJogo.JogoAcabou)
+			return false;
+		
 		this.dado = dado;
-		if (jogadores != null && this.estadoAtual == EstadosJogo.PreDado) {
+		if (jogadores != null) {
 						
 			int qtdCasas = dado.getSoma();
 			Jogador jogadorVez = jogadores[this.jogadorRodada];
@@ -94,6 +99,16 @@ class BancoImobiliario implements ObservadoJogo {
 			this.notificarObservadores();
 			this.acaoJogador();
 			
+			if(this.estadoAtual == EstadosJogo.JogoAcabou)
+				return false;
+			
+			if(jogadorVez.isFalido){
+				estadoAtual = EstadosJogo.PosDado;
+				passarRodada();
+				return true;
+			}
+			
+			
 			if (dado.getDado1() == dado.getDado2() && !jogadorVez.isPreso) {
 				this.numeroRepeticoes++;
 				this.estadoAtual = EstadosJogo.PreDado;
@@ -108,7 +123,7 @@ class BancoImobiliario implements ObservadoJogo {
 	}
 	
 	 boolean passarRodada() {	
-		 if (this.estadoAtual == EstadosJogo.PreDado)
+		 if (this.estadoAtual == EstadosJogo.PreDado || this.estadoAtual == EstadosJogo.JogoAcabou)
 			 return false;
 		 
 		 if(jogadorRodada==(qtdJogadoresTotal-1))
@@ -317,7 +332,6 @@ class BancoImobiliario implements ObservadoJogo {
 			}
 			
 			if (resp == -10) {
-				//FALIU
 				return false;
 			}
 			
@@ -343,7 +357,7 @@ class BancoImobiliario implements ObservadoJogo {
 		else
 			pagamento = dinheiro;
 		
-		devedor.credita(pagamento);
+		credor.credita(pagamento);
 		
 		devedor.lstTerrenos = null;
 		devedor.isFalido = true;
@@ -356,12 +370,15 @@ class BancoImobiliario implements ObservadoJogo {
 			}		
 		}
 		
+		devedor.setSaldo(0);
 		if(qtdNaoFalidos == 1) {
 			this.notificarMensagens("Você faliu. O jogador "+corCredor+" é o grande milionário.", "Game Over.");
+			estadoAtual = EstadosJogo.JogoAcabou;
 		}
 		else {
-			this.notificarMensagens("Você faliu. O jogador "+corCredor+" recebeu R$"+pagamento+".", "Falência.");
+			this.notificarMensagens("Você faliu. O jogador "+corCredor+" recebeu R$"+pagamento+".", "Falência.");			
 		}
+		
 	}
 	
 			

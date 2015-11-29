@@ -1,7 +1,7 @@
 3
 2123 10 false
 100 1 false
-4000 0 false
+40 0 false
 4 0 false 1
 8 4 true 0
 21 4 false 0
