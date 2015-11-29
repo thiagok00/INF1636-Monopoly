@@ -2,7 +2,6 @@ package Jogo;
 import Peças.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Queue;
 
 enum EstadosJogo {
@@ -163,11 +162,9 @@ class BancoImobiliario implements ObservadoJogo {
 						if(prop.getQtdSedes() == 0){
 							int resp = controlador.oferecerConstruirOuHipotecar();
 							if(resp == 0)  {
-								//construir TODO: VERIFICAR QUANTIDADE DE SEDES DE TODAS AS OUTRAS PROP
 								prop.construirSede();
 							}
 							else if (resp == 1) {
-								//hipotecar
 								prop.hipotecar();
 							}
 
@@ -175,14 +172,12 @@ class BancoImobiliario implements ObservadoJogo {
 						else {
 							int resp = controlador.oferecerConstruirOuVender();
 							if(resp == 0)  {
-								//construir TODO: VERIFICAR QUANTIDADE DE SEDES DE TODAS AS OUTRAS PROP
 								if (prop.getQtdSedes() < 4)
 									prop.construirSede();
 								else 
 									prop.construirComite();
 							}
 							else if (resp == 1) {
-								//hipotecar
 								prop.venderConstrucao();
 							}
 						}

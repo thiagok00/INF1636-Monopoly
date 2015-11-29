@@ -197,7 +197,9 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 			String strCor = Jogador.getJogadorCor(prop.getDono());
 			int qtdSedes = prop.getQtdSedes();
 		
-			if (prop.temComite)
+			if (prop.isHipotecado)
+				imgPath =  imgPath+strCor+"Hipotecado";
+			else if (prop.temComite)
 				imgPath = imgPath+strCor+" Comite";
 			else
 				imgPath = imgPath+strCor+"Casa "+qtdSedes;
@@ -216,7 +218,6 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 	
 	private Ponto getPropImgPos(Propriedade prop) {
 		
-		Ponto pto = new Ponto(100,100);
 		int numCasa = prop.numeroCasa;
 		
 		if (numCasa == 1)
@@ -255,7 +256,8 @@ public class TabuleiroPainel extends JPanel implements ObservadorJogo, MouseList
 			return new Ponto(306,638);
 		if (numCasa == 35)
 			return new Ponto(108,638);		
-		return pto;
+		
+		return new Ponto(100,100);
 	}
 	
 	
