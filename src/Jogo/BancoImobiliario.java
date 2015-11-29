@@ -91,8 +91,11 @@ class BancoImobiliario implements ObservadoJogo {
 
 				String titulo = "Pagamento de Pró-Labore";
 				String msg = "Você recebeu R$200!";
-				this.notificarMensagens(msg, titulo);
 				novaCasa = (novaCasa)%36;
+				jogadorVez.casaAtual = novaCasa;
+				this.notificarObservadores();
+				this.notificarMensagens(msg, titulo);
+				
 			}
 			
 			jogadorVez.casaAtual = novaCasa;
@@ -168,8 +171,6 @@ class BancoImobiliario implements ObservadoJogo {
 		Casa casa = casas[numeroCasa];
 		if (jogadorVez.isPreso || this.estadoAtual == EstadosJogo.PreDado)
 			return false;
-			
-		
 		
 		if (casa instanceof Terreno) {
 			Jogador dono = ((Terreno)casa).getDono();
@@ -289,8 +290,15 @@ class BancoImobiliario implements ObservadoJogo {
 				jogadorVez.passesPrisao++;
 			else if(cartaAtual.valor > 0)
 				jogadorVez.credita(cartaAtual.valor);
-			else if(cartaAtual.valor < 0)	
+			else if(cartaAtual.valor < 0)	{
+				if (cartaAtual.valor*-1 > jogadorVez.getSaldo()){
+					if (this.venderBensJogador(jogadorVez, cartaAtual.valor*-1) == false){
+						this.falirJogador(jogadorVez,null,cartaAtual.valor*-1);
+						return;
+					}
+				}
 				jogadorVez.debita((-1)*cartaAtual.valor);
+			}
 
 			this.notificarObservadores(cartaAtual.numCarta,true);
 			cartas.add(cartaAtual);
@@ -357,26 +365,35 @@ class BancoImobiliario implements ObservadoJogo {
 		else
 			pagamento = dinheiro;
 		
-		credor.credita(pagamento);
+		if(credor != null)
+			credor.credita(pagamento);
 		
 		devedor.lstTerrenos = null;
 		devedor.isFalido = true;
-		String corCredor = Jogador.getJogadorCor(credor);
+		
+		String strCredor = "";
+		if (credor != null)
+			strCredor = Jogador.getJogadorCor(credor);
 		
 		int qtdNaoFalidos = 0;
 		for(Jogador jogador : jogadores){
 			if(!jogador.isFalido){
 				qtdNaoFalidos++;
+				if(credor == null)
+					strCredor = Jogador.getJogadorCor(jogador);
 			}		
 		}
 		
 		devedor.setSaldo(0);
 		if(qtdNaoFalidos == 1) {
-			this.notificarMensagens("Você faliu. O jogador "+corCredor+" é o grande milionário.", "Game Over.");
+			this.notificarMensagens("Você faliu. O jogador "+strCredor+" é o grande milionário.", "Game Over.");
 			estadoAtual = EstadosJogo.JogoAcabou;
 		}
 		else {
-			this.notificarMensagens("Você faliu. O jogador "+corCredor+" recebeu R$"+pagamento+".", "Falência.");			
+			if (credor != null)
+				this.notificarMensagens("Você faliu. O jogador "+strCredor+" recebeu R$"+pagamento+".", "Falência.");
+			else 
+				this.notificarMensagens("Você faliu.", "Falência");
 		}
 		
 	}
