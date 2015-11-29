@@ -230,13 +230,12 @@ class BancoImobiliario implements ObservadoJogo {
 							this.falirJogador(jogadorVez,terreno.getDono(),terreno.getTaxa());
 							return;
 						}
-							
-				
+					}
 					terreno.pagarTaxa(jogadorVez, this.dado);
 					String donoString = Jogador.getJogadorCor(terreno.getDono() ) ;
 					String msg = "Você pagou R$"+terreno.getTaxa()+" para o Jogador "+donoString;
 					this.notificarObservadores();
-					this.notificarMensagens(msg, "Pagamento de Aluguel");}
+					this.notificarMensagens(msg, "Pagamento de Aluguel");
 				}
 				
 			}
